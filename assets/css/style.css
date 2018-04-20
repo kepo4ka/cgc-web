@@ -66,3 +66,57 @@ footer {
   border-top: 1px solid #e0e0e0;
   padding-top: 15px;
 }
+
+
+/*table {*/
+  /*table-layout: fixed;*/
+/*}*/
+
+.header_table {
+  table-layout: fixed;
+}
+
+.table_center th, .table_center td {
+  text-align: center !important;
+}
+
+
+.source_info_div {
+  overflow-x: auto;
+}
+
+.hidden_content {
+  display: none;
+}
+
+a.pointer {
+  cursor: pointer !important;
+}
+
+.auth_form {
+  display: none;
+}
+
+.flex_ul {
+  display: flex;
+}
+
+.flex_ul > li {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.display_none {
+  display: none !important;
+}
+
+.notitfations_fixed {
+  position: fixed;
+  background: #66BB6A;
+  right: 1%;
+  bottom: 3%;
+  padding: 1% 2%;
+  z-index:2;
+  border-radius: 2px;
+  display: none;
+}

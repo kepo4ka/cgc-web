@@ -1,5 +1,5 @@
 <?php
-$title = "MUI Landing Page with Extras";
+$title = "Code Game Challenge Test";
 
 ?>
 

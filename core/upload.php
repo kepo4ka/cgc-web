@@ -1,9 +1,6 @@
 <?php
 
-$userLogin = "test";
-
-$uploadfile = SOURCE_PATH . "/" . $userLogin . "/strategy.cs";
-
+$userLogin = $_SESSION['user_id'];
 
 if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
 
@@ -26,6 +23,7 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
         $type = pathinfo($userFile['name'])['extension'];
         if ($type !== "cs")
         {
+
             $err[] = "Неверное расширение файла, пока только C#";
         }
 
@@ -39,17 +37,36 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
             print_r($err);
         }
         else {
-            if (!is_dir(SOURCE_PATH . "/" . $userLogin))
+            $last_upload_source_id = GetLastSourceID();
+
+            $last_upload_source_id++;           
+
+            $uploadPath = SOURCE_PATH . "/" . $last_upload_source_id;
+            if (!is_dir($uploadPath))
             {
-                mkdir(SOURCE_PATH . "/" . $userLogin);
+                mkdir($uploadPath);
             }
+            $uploadPath .= "/" . SOURCE_FILE_NAME;
 
             if (is_uploaded_file($userFile['tmp_name'])) {
-                move_uploaded_file($userFile['tmp_name'], $uploadfile);
-                ChangeSourceFileInfo(1, $uploadfile);
+
+
+                move_uploaded_file($userFile['tmp_name'], $uploadPath);
+                if ($text = file_get_contents($uploadPath)) {
+//                    echo "<pre>";
+//                    print_r($text);
+//                    echo "</pre>";
+                    
+                    InsertSourceFileInfo($userLogin, $text);
+                    
+                      header("Location: " . $_SERVER['PHP_SELF']);
+
+                }
             }
         }
     }
+
 }
+
 
 ?>
