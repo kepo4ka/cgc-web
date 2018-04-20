@@ -15,9 +15,8 @@ if (!isset($user)) {
 }
 
 $users = getUsersForGameStart($_SESSION['user_id']);
-
 $source_info = GetUserSourceInfo($_SESSION['user_id']);
-
+$games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
 ?>
 
 
@@ -150,7 +149,7 @@ require_once("core/header.php");
 
             <form action="profile.php" method="post" class="mui-form" enctype='multipart/form-data'>
                 <input type="file" required name="source"/>
-                <button type="submit" name="upload" class="mui-btn mui-btn--raised">Отправить</button>
+                <button type="submit" name="upload" class="mui-btn mui-btn--primary">Отправить</button>
 
             </form>
         </div>
@@ -165,7 +164,7 @@ require_once("core/header.php");
                         <th>ID</th>
                         <th>Имя</th>
                         <th>Очки</th>
-                        <th>Выбрать</th>
+                        <th>Выбрать соперника</th>
                     </tr>
                     </thead>
 
@@ -208,7 +207,68 @@ require_once("core/header.php");
             </div>
 
         </div>
-        <div class="mui-tabs__pane mui-panel" id="pane-default-3">Pane-3</div>
+        <div class="mui-tabs__pane mui-panel" id="pane-default-3">
+
+            <div class="mui-container-fluid ">
+
+                <table class="mui-table mui-table--bordered table_center users_info_table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID игры</th>
+                        <th>Дата начала</th>
+                        <th>Статус</th>
+                        <th>Участники</th>
+                        <th>Очки</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php
+                    $i = 1;
+                    foreach ($games_info as $game) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?= $i ?>
+                            </td>
+                            <td class="user_id">
+                                <?= $game['id'] ?>
+                            </td>
+
+                            <td>
+
+                                <?= date("d/m/Y H:i:s", $game['datetime']) ?>
+
+                            </td>
+                            <td>
+                                <?= $game['status'] ?>
+                            </td>
+                            <td>
+                                <?php
+
+                                foreach ($game['users'] as $game_user) { ?>
+
+                                    <?= $game_user['name'] ?>
+                                    <br>
+                                    <?php
+                                } ?>
+                            </td>
+                            <td></td>
+                            <td>
+                                <button type="button"  class="mui-btn mui-btn--small mui-btn--primary"> Просмотр (недоступно)
+                                </button>
+
+                            </td>
+                        </tr>
+                        <?php
+                        $i++;
+                    } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 </div>
