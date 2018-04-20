@@ -121,7 +121,7 @@ $(document).ready(function () {
 
     function SelectUserforGame(elem, k) {
         console.log(users_array);
-        if (users_array.length >= 3) {
+        if (users_array.length >= 3 && k) {
             alert("Нельзя добавить больше 3 участников");
             $(elem).prop("checked", false);
             return;
