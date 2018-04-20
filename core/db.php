@@ -307,6 +307,60 @@ function GetUserSourceInfoOnlyCompiledANDUsed($user_id)
 }
 
 
+function GetSandboxGameInfoByCreator($user_id)
+{
+    global $link;
+
+    $sql = "SELECT * FROM sandbox_game_session WHERE creator=?";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $user_id);
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+    
+            $row['users'] = GetUsersInGroup($row['users_group']);
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
+
+function GetUsersInGroup($group_id)
+{
+    global $link;
+
+    $sql = "SELECT user_id, name FROM users_group, users WHERE users_group.user_id=users.id AND group_id=?";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $group_id);
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
+
+
+
 function dbChecklogin($login, $password)
 {
     global $link;
