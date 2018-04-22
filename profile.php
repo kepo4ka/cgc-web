@@ -221,9 +221,9 @@ require_once("core/header.php");
 
 
         </div>
-        <div class="mui-tabs__pane" id="pane-default-2">
+        <div class="mui-tabs__pane mui-panel" id="pane-default-2">
 
-            <div class="mui-container-fluid ">
+            <div class="mui-container-fluid">
 
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
