@@ -1,8 +1,14 @@
 <?php
+if (!defined("CGC"))
+{
+    header('HTTP/1.1 404 Not Found');
+    header("Refresh:0; url=notExistPage.php");
+}
 
 $userLogin = $_SESSION['user_id'];
 
 if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
+
 
     if(!empty($_FILES)) {
         $userFile = $_FILES['source'];
@@ -56,10 +62,10 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
 //                    echo "<pre>";
 //                    print_r($text);
 //                    echo "</pre>";
-                    
-                    InsertSourceFileInfo($userLogin, $text);
-                    
-                      header("Location: " . $_SERVER['PHP_SELF']);
+
+                    $res = InsertSourceFileInfo($userLogin, $text);
+                    $_SESSION['upload_time'] = time();
+                    header("Location: " . $_SERVER['PHP_SELF']);
 
                 }
             }

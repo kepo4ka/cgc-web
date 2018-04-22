@@ -1,5 +1,12 @@
 <?php
 session_start();
+if (!defined("CGC"))
+{
+    header('HTTP/1.1 404 Not Found');
+    header("Refresh:0; url=notExistPage.php");
+}
+
+
 
 require_once ("config.php");
 require_once ("db.php");

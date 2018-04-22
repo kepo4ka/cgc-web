@@ -1,5 +1,14 @@
 <?php
 
+
+if (!defined("CGC"))
+{
+    header('HTTP/1.1 404 Not Found');
+    header("Refresh:0; url=notExistPage.php");
+}
+
+
+
 function auth($login, $pass)
 {
     if (empty($login) || empty($pass) || !isset($login) || !isset($pass)) {
