@@ -1,14 +1,10 @@
 <?php
-
-session_start();
 require_once("core/config.php");
+session_start();
 require_once("core/db.php");
 require_once ("core/functions.php");
 $users = getUsers();
 ?>
-
-
-
 
 <!doctype html>
 <html>
@@ -33,7 +29,7 @@ require_once("core/header.php");
 
     <div class="mui-container-fluid mui-panel">
 
-        <div class="mui--text-display1">Участники</div>
+        <div class="mui--text-display1">Список пользователей</div>
         <div class="mui-container-fluid ">
             
             <table class="mui-table mui-table--bordered table_center users_info_table">
