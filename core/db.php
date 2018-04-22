@@ -226,7 +226,7 @@ function InsertSourceFileInfo($user_id, $text)
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
         /* bind parameters for markers */
-        $time = time();
+        $time = time() + 3600;
         $stmt->bind_param("isi", $user_id, $text, $time);
         $stmt->execute();
         $stmt->store_result();
@@ -454,7 +454,7 @@ function InsertGameINFOSandbox($group_id, $user_id)
     $sql = "INSERT INTO sandbox_game_session (datetime, users_group, status, creator) VALUES (?,?, 'wait', ?)";
     $last_id = -1;
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
-        $time = time();
+        $time = time() + 3600;
         $stmt->bind_param("iii", $time, $group_id, $user_id);
         $stmt->execute();
         $stmt->store_result();
