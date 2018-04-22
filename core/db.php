@@ -1,5 +1,12 @@
 <?php
 
+if (!defined("CGC"))
+{
+    header('HTTP/1.1 404 Not Found');
+    header("Refresh:0; url=notExistPage.php");
+}
+
+
 
 $link = Connect();
 
@@ -33,7 +40,7 @@ function CloseDB($link)
 function getUsers()
 {
     global $link;
-    $sql = "SELECT users.id, users.points, users.name FROM users, sources WHERE users.id = sources.user_id AND sources.status='ok' ORDER BY points DESC";
+    $sql = "SELECT DISTINCT users.id, users.points, users.name FROM users, sources WHERE users.id = sources.user_id ORDER BY points DESC";
     $users_array = array();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
@@ -156,9 +163,8 @@ function getUser($user_id)
 function GetLastSourceID()
 {
     global $link;
-
-    $sql = "SELECT id FROM sources ORDER BY id DESC";
     $id = 0;
+    $sql = "SELECT id FROM sources ORDER BY id DESC LIMIT 1";
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
@@ -211,9 +217,9 @@ function UpdateUnselectAnotherSources($user_id, $source_id = 0)
 
 function InsertSourceFileInfo($user_id, $text)
 {
-    UpdateUnselectAnotherSources($user_id);
-
     global $link;
+
+    UpdateUnselectAnotherSources($user_id);
 
     $sql = "INSERT INTO sources (id, user_id, text, status, used, upload_time) VALUES ('', ?, ?, 'wait', 1, ?)";
 
@@ -262,7 +268,7 @@ function GetUserSourceInfo($user_id)
 {
     global $link;
 
-    $sql = "SELECT * FROM sources WHERE user_id=? ORDER BY id";
+    $sql = "SELECT * FROM sources WHERE user_id=? ORDER BY id DESC";
     $result = array();
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
@@ -311,7 +317,7 @@ function GetSandboxGameInfoByCreator($user_id)
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox_game_session WHERE creator=?";
+    $sql = "SELECT * FROM sandbox_game_session WHERE creator=? ORDER BY id DESC";
 
     $result = array();
 
@@ -332,6 +338,30 @@ function GetSandboxGameInfoByCreator($user_id)
     }
     return $result;
 }
+
+
+function GetALLSandboxGames()
+{
+    global $link;
+
+    $sql = "SELECT * FROM sandbox_game_session";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+
+            $row['users'] = GetUsersInGroup($row['users_group']);
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
 
 
 function GetUsersInGroup($group_id)
