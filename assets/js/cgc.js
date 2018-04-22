@@ -4,17 +4,13 @@ $(document).ready(function () {
     var users_array = [];
 
     $("a.burger_icon_btn").on("click", function () {
-        myFunction();
+        ToggleResponsiveNavbarItems();
     });
-
 
     $("a.open_hide_info").on("click", function () {
         var text = $(this).parent().find(".hidden_content").html();
         activateModalText(text);
     });
-
-
-
 
     $("a.login_btn").on("click", function () {
       //  var text = $("form.auth_form").html();
@@ -200,7 +196,7 @@ $(document).ready(function () {
         mui.overlay('on', modalEl);
     }
 
-    function myFunction() {
+    function ToggleResponsiveNavbarItems() {
         var x = document.getElementById("myNavbar");
         if (x.className === "navbar") {
             x.className += " responsive";
