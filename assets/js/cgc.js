@@ -3,17 +3,27 @@ $(document).ready(function () {
 
     var users_array = [];
 
-    $("table.uploaded_info_table a.open_hide_info").on("click", function () {
+    $("a.burger_icon_btn").on("click", function () {
+        myFunction();
+    });
+
+
+    $("a.open_hide_info").on("click", function () {
         var text = $(this).parent().find(".hidden_content").html();
         activateModalText(text);
     });
 
 
+
+
     $("a.login_btn").on("click", function () {
-        var text = $("form.auth_form").html();
-        var elem = activateModalHTML(text);
-        $("form.auth_form").appendTo($(elem));
-        $("form.auth_form").css("display", "block");
+      //  var text = $("form.auth_form").html();
+        var elem = activateModalHTML("div");
+       // $("form.auth_form").appendTo($(elem));
+        var form = $("form.auth_form").clone();
+        form.css("display", "block");
+        form.appendTo($(elem));
+       // $("form.auth_form").css("display", "block");
     });
 
     $("button#get_started_btn").on("click", function () {
@@ -21,7 +31,6 @@ $(document).ready(function () {
     });
 
     $(".select_users_checkbox").on("change", function () {
-
         SelectUserforGame(this, $(this).prop("checked"));
     });
 
@@ -29,6 +38,7 @@ $(document).ready(function () {
     $(".game_start_btn").on("click", function () {
         AjaxSendUserGameStartInfo();
     });
+
 
 
     $(".source_selected_radio").on("change", function () {
@@ -41,12 +51,18 @@ $(document).ready(function () {
     });
 
 
+
+
+
+
+
     function AjaxChangeSelectedSource(source_id, visual_id) {
         $.ajax({
             type: "POST",
-            url: "core/ajax.php",
+            url: "ajax.php",
             // dataType: 'json',
             data: {
+                "type": "updateselectedsource",
                 "user_id": myUserId,
                 "source_id": source_id
             },
@@ -65,22 +81,8 @@ $(document).ready(function () {
                 else {
                     var message = "Ошибка при попытке изменения поля";
                 }
+                NotifyMessage(message);
             }
-        });
-    }
-
-
-
-    function NotifyMessage(message) {
-        var notify = $(".notitfations_fixed");
-        notify.text(message);
-
-        notify.fadeIn("slow", function () {
-            setTimeout(function () {
-                notify.fadeOut("slow", function () {
-                    notify.text("");
-                });
-            }, 2000);
         });
     }
 
@@ -89,12 +91,12 @@ $(document).ready(function () {
             alert("Необходимо выбрать не менее одного пользователя");
             return;
         }
-
         $.ajax({
             type: "POST",
-            url: "core/ajax.php",
+            url: "ajax.php",
             // dataType: 'json',
             data: {
+                "type": "createusersandboxgame",
                 "user_id": myUserId,
                 "users_array": users_array
             },
@@ -107,7 +109,7 @@ $(document).ready(function () {
 
                 if (res[0]=="good")
                 {
-                   message = "Игра №" + res[1] + " успешно добавлена в очередь. Следите за её состоянием на вкладке История Игр"
+                    message = "Игра №" + res[1] + " успешно добавлена в очередь. Следите за её состоянием на вкладке История Игр"
                 }
                 else {
                     message = response;
@@ -117,6 +119,23 @@ $(document).ready(function () {
         });
 
     }
+
+
+    function NotifyMessage(message) {
+        var notify = $(".notitfations_fixed");
+        notify.text(message);
+        notify.css("display", "none");
+        notify.fadeIn("slow", function () {
+            setTimeout(function () {
+                notify.fadeOut("slow", function () {
+                    notify.text("");
+                  //  window.location.reload();
+                });
+            }, 2000);
+        });
+    }
+
+
 
 
     function SelectUserforGame(elem, k) {
@@ -163,19 +182,35 @@ $(document).ready(function () {
     }
 
 
+
     function activateModalText(text) {
+
         var modalEl = document.createElement('div');
         modalEl.style.minWidth = '400px';
         modalEl.style.maxWidth = "400px";
         modalEl.style.Height = '300px';
         modalEl.style.margin = '100px auto';
         modalEl.style.backgroundColor = '#fff';
+        modalEl.style.position='relative';
         modalEl.className = "mui-panel";
-        modalEl.innerText = text;
-        // show modal
+
+        $(modalEl)[0].innerText =text;
+
 
         mui.overlay('on', modalEl);
     }
 
+    function myFunction() {
+        var x = document.getElementById("myNavbar");
+        if (x.className === "navbar") {
+            x.className += " responsive";
+        } else {
+            x.className = "navbar";
+        }
+    }
+
+
 
 });
+
+
