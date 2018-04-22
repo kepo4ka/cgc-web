@@ -84,7 +84,7 @@ $(document).ready(function () {
 
     function AjaxSendUserGameStartInfo() {
         if (users_array.length < 1) {
-            alert("Необходимо выбрать не менее одного пользователя");
+            NotifyERRORMessage("Необходимо выбрать не менее одного пользователя");
             return;
         }
         $.ajax({
@@ -133,11 +133,28 @@ $(document).ready(function () {
 
 
 
+    function NotifyERRORMessage(message) {
+        var notify = $(".notitfations_fixed");
+        notify.text(message);
+        notify.css("display", "none");
+        notify.css("background", "#EF5350");
+        notify.fadeIn("slow", function () {
+            setTimeout(function () {
+                notify.fadeOut("slow", function () {
+                    notify.text("");
+                    notify.css("background", "#66BB6A");
+                    //  window.location.reload();
+                });
+            }, 2000);
+        });
+    }
+
 
     function SelectUserforGame(elem, k) {
         console.log(users_array);
         if (users_array.length >= 3 && k) {
-            alert("Нельзя добавить больше 3 участников");
+
+            NotifyERRORMessage("Нельзя добавить больше 3 участников");
             $(elem).prop("checked", false);
             return;
         }
