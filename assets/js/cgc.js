@@ -111,6 +111,10 @@ $(document).ready(function () {
                     message = response;
                 }
                 NotifyMessage(message);
+
+                setTimeout(function () {
+                    window.location.href = "/profile.php?tab=3";
+                }, 1500);
             }
         });
 
@@ -158,7 +162,7 @@ $(document).ready(function () {
             $(elem).prop("checked", false);
             return;
         }
-        var user_id = $(elem).parent().parent().find(".user_id").text();
+        var user_id = $(elem).parent().parent().parent().find(".user_id").text();
 
         if (!user_id) {
             alert("Не удалось найти ID пользователя");

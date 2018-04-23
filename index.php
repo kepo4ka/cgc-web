@@ -20,8 +20,9 @@ require_once("core/head.php");
       <img src="assets/img/bomber.png" alt="">
 
       <br>
-      <div class="mui--text-display3 row wow zoomInDown">
+      <div class="mui--text-display1 row wow zoomInDown">
         NOSU Code Game Challange</div>
+    
       <div class="mui--text-display5 row wow fadeIn">
         Конкурс игровых стратегий</div>
       <br>

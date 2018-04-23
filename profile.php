@@ -50,12 +50,36 @@ if (isset($_SESSION['sandbox_create_time'])) {
 if (isset($_SESSION['sandbox_create_block']) && $_SESSION['sandbox_create_block'] == true) {
     $sandboxgame_createblock = true;
 }
+if (!isset($_GET['tab'])) {
+    $_GET['tab'] = 1;
+}
 
+$tab1 = "";
+$tab2 = "";
+$tab3 = "";
 
+$active = "mui--is-active";
+
+switch ($_GET['tab']) {
+    case 1:
+        $tab1 = $active;
+
+        break;
+    case 2:
+        $tab2 = $active;
+        break;
+    case 3:
+        $tab3 = $active;
+        break;
+    default:
+        $tab1 = $active;
+        break;
+}
 
 $users = getUsersForGameStart($_SESSION['user_id']);
 $source_info = GetUserSourceInfo($_SESSION['user_id']);
 $games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
+
 ?>
 
 
@@ -93,21 +117,21 @@ require_once("core/header.php");
     <div class="mui-container-fluid">
 
         <ul class="mui-tabs__bar flex_ul">
-            <li class="mui--is-active"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-1">
+            <li class="<?= $tab1 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-1">
                     <i class="fa fa-user"></i>
                     Моя стратегия</a>
             </li>
-            <li><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-2">
+            <li class="<?= $tab2 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-2">
                     <i class="fa fa-plus-circle"></i>
                     Создать игру</a></li>
-            <li><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-3">
+            <li class="<?= $tab3 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-3">
                     <i class="fa fa-history"></i>
                     История игр</a></li>
         </ul>
 
-        <div class="mui-tabs__pane mui--is-active mui-panel" id="pane-default-1">
+        <div class="mui-tabs__pane mui-panel <?= $tab1 ?>" id="pane-default-1">
 
-            <form action="profile.php" method="post" class="mui-form" enctype='multipart/form-data'>
+            <form action="profile.php?tab=1" method="post" class="mui-form" enctype='multipart/form-data'>
                 <input type="file" required name="source" <?php if ($uploadblock) {
                     echo "disabled";
                 } ?> />
@@ -187,21 +211,16 @@ require_once("core/header.php");
                             </td>
                             <td>
                                 <div class="mui-radio">
-                                    <label>
-
-                                        <input type="radio"
-                                               name="source_selected_radio"
-                                               class="source_selected_radio"
-                                            <?php if ($info['status']!='error') {
-                                                if ($info['used'] == 1) {
-                                                    echo "checked";
-                                                }
+                                    <label class="radio_container">
+                                        <input type="radio" class="source_selected_radio"
+                                               name="radio" <?php if ($info['status'] == 'ok') {
+                                            if ($info['used'] == 1) {
+                                                echo "checked";
                                             }
-                                            else {
-                                                echo "disabled";
-                                            }
-                                            ?>
-                                        >
+                                        } else {
+                                            echo "disabled";
+                                        } ?> >
+                                        <span class="checkmark"></span>
                                     </label>
                                 </div>
                             </td>
@@ -211,17 +230,12 @@ require_once("core/header.php");
                         $i++;
                     } ?>
 
-
                     </tbody>
-
                 </table>
-
-
             </div>
-
-
         </div>
-        <div class="mui-tabs__pane mui-panel" id="pane-default-2">
+
+        <div class="mui-tabs__pane mui-panel <?= $tab2 ?>" id="pane-default-2">
 
             <div class="mui-container-fluid">
 
@@ -258,7 +272,12 @@ require_once("core/header.php");
                                 <?= $info['points'] ?>
                             </td>
                             <td>
-                                <input type="checkbox" class="select_users_checkbox">
+<!--                               <input type="checkbox" class="select_users_checkbox">-->
+
+                                <label class="checkbox_container">
+                                    <input type="checkbox" class="select_users_checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
                             </td>
                         </tr>
                         <?php
@@ -283,7 +302,7 @@ require_once("core/header.php");
             </div>
        
         </div>
-        <div class="mui-tabs__pane mui-panel" id="pane-default-3">
+        <div class="mui-tabs__pane mui-panel <?= $tab3 ?>" id="pane-default-3">
 
             <div class="mui-container-fluid ">
 
