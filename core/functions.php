@@ -104,19 +104,40 @@ function GameSandboxFilesProccess($good_users_info, $last_id)
         $temp_user_destination = $temp_user_dir . "/" . EXE_FILE_NAME;
         $origin_user_destination = SOURCE_PATH . "/" . $user_source[0]['id'] . "/" . EXE_FILE_NAME;
 
-        if (!is_dir($temp_user_dir)) {
-            mkdir($temp_user_dir);
+        if (!is_dir($temp_user_dir) && !mkdir($temp_user_dir)) {
+            return;
         }
 
         if (!copy($origin_user_destination, $temp_user_destination)) {
 
             print_r($origin_user_destination);
             print_r($temp_user_destination);
-            echo "НЕ УДАЛОСЬ СКОПИРОВАТЬ ФАЙЛ ПОЛЬЗОВАТЕЛЯ c ID " . $user_source[0]['user_id'];
+            echo "НЕ УДАЛОСЬ СКОПИРОВАТЬ ФАЙЛ " . EXE_FILE_NAME . " ПОЛЬЗОВАТЕЛЯ c ID " . $user_source[0]['user_id'];
             return;
         }
+
+        $temp_user_dir = $game_dir . "/" . $user_source[0]['user_id'];
+        $temp_user_destination = $temp_user_dir . "/" . USER_CLASS_DLL_NAME;
+        $origin_user_destination = SOURCE_PATH . "/" . $user_source[0]['id'] . "/" . USER_CLASS_DLL_NAME;
+
+        if (!is_dir($temp_user_dir) && !mkdir($temp_user_dir)) {
+            return;
+        }
+
+        if (!copy($origin_user_destination, $temp_user_destination)) {
+
+            print_r($origin_user_destination);
+            print_r($temp_user_destination);
+            echo "НЕ УДАЛОСЬ СКОПИРОВАТЬ ФАЙЛ " .USER_CLASS_DLL_NAME . " ПОЛЬЗОВАТЕЛЯ c ID " . $user_source[0]['user_id'];
+            return;
+        }
+
     }
 }
+
+
+
+
 
 function file_force_download($file) {
     if (file_exists($file)) {
