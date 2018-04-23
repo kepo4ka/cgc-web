@@ -219,9 +219,9 @@ function InsertSourceFileInfo($user_id, $text)
 {
     global $link;
 
-    UpdateUnselectAnotherSources($user_id);
+  //  UpdateUnselectAnotherSources($user_id);
 
-    $sql = "INSERT INTO sources (id, user_id, text, status, used, upload_time) VALUES ('', ?, ?, 'wait', 1, ?)";
+    $sql = "INSERT INTO sources (id, user_id, text, status, used, upload_time) VALUES ('', ?, ?, 'wait', 0, ?)";
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
@@ -230,12 +230,10 @@ function InsertSourceFileInfo($user_id, $text)
         $stmt->bind_param("isi", $user_id, $text, $time);
         $stmt->execute();
         $stmt->store_result();
-        $affec_rows = $stmt->affected_rows;
+        $insert_id = $stmt->insert_id;
         $stmt->free_result();
         $stmt->close();
-        if ($affec_rows > 0) {
-            return true;
-        }
+        return $insert_id;
     }
     return false;
 }

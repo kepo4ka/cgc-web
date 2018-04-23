@@ -43,30 +43,17 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
             print_r($err);
         }
         else {
-            $last_upload_source_id = GetLastSourceID();
 
-            $last_upload_source_id++;           
-
-            $uploadPath = SOURCE_PATH . "/" . $last_upload_source_id;
-            if (!is_dir($uploadPath))
-            {
-                mkdir($uploadPath);
-            }
-            $uploadPath .= "/" . SOURCE_FILE_NAME;
-
-            if (is_uploaded_file($userFile['tmp_name'])) {
-
-
-                move_uploaded_file($userFile['tmp_name'], $uploadPath);
-                if ($text = file_get_contents($uploadPath)) {
-//                    echo "<pre>";
-//                    print_r($text);
-//                    echo "</pre>";
-
-                    $res = InsertSourceFileInfo($userLogin, $text);
+            if (is_uploaded_file($userFile['tmp_name']) && $text = file_get_contents($userFile['tmp_name'])) {
+                if ($last_upload_source_id = InsertSourceFileInfo($userLogin, $text)) {
+                    $uploadPath = SOURCE_PATH . "/" . $last_upload_source_id;
+                    if (!is_dir($uploadPath)) {
+                        mkdir($uploadPath);
+                    }
+                    $uploadPath .= "/" . SOURCE_FILE_NAME;
+                    move_uploaded_file($userFile['tmp_name'], $uploadPath);
                     $_SESSION['upload_time'] = time();
                     header("Location: " . $_SERVER['PHP_SELF']);
-
                 }
             }
         }
