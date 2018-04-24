@@ -40,7 +40,7 @@ function CloseDB($link)
 function getUsers()
 {
     global $link;
-    $sql = "SELECT DISTINCT users.id, users.points, users.name FROM users, sources WHERE users.id = sources.user_id ORDER BY points DESC";
+    $sql = "SELECT DISTINCT users.id, users.points, users.name FROM users ORDER BY points DESC";
     $users_array = array();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
