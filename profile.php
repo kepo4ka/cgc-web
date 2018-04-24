@@ -80,6 +80,9 @@ switch ($_GET['tab']) {
         break;
 }
 
+DeleteSandboxGameInfo($_SESSION['user_id']);
+
+
 $users = getUsersForGameStart($_SESSION['user_id']);
 $source_info = GetUserSourceInfo($_SESSION['user_id']);
 $my_games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
@@ -302,12 +305,19 @@ require_once("core/header.php");
             ?>> Начать игру с
                 выбранными игроками
             </button>
-            <div class="mui-container-fluid mui--text-title bold">
-                <?php if ($sandboxgame_createblock == true) {
-                    echo "Ограничение на создание пользовательских игр - " . SANDBOX_CREATE_TIME_OUT . " секунд";
-                } ?>
-
+            <br>
+            <div class="mui-container-fluid mui--text-title bold help_text_info"><i
+                    class="fa fa fa-exclamation-circle"></i> Ограничение на создание
+                пользовательских игр - <?= SANDBOX_CREATE_TIME_OUT ?> секунд
             </div>
+
+            <br>
+
+            <div class="mui-container-fluid mui--text-title bold help_text_info"><i
+                    class="fa fa fa-exclamation-circle"></i> Ограничение на создание игр
+                - <?= SANDBOX_GAMES_MAX_COUNT ?> (старые игры будут удаляться)
+            </div>
+
        
         </div>
         <div class="mui-tabs__pane mui-panel <?= $tab3 ?>" id="pane-default-3">

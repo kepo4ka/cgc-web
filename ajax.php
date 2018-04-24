@@ -17,6 +17,7 @@ switch ($_POST['type']) {
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
             CreateUserSandBoxGame($_POST['user_id'], $_POST['users_array']);
             $_SESSION['sandbox_create_time'] = time();
+            DeleteSandboxGameInfo($_POST['user_id']);
         }
         return;
 

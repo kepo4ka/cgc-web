@@ -467,8 +467,6 @@ function SelectSandboxGameInfo($user_id)
             mysqli_stmt_close($stmt);
 
             return $last_create_time;
-
-
         }
     }
     return -1;
@@ -530,8 +528,67 @@ function InsertUserGroup($users_array)
         $stmt->close();
     }
     return $group_id;
-
 }
+
+
+
+function SelectSandboxGamesforDelete($creator)
+{
+    global $link;
+    $games_id = array();
+
+    $sql = "SELECT id FROM sandbox_game_session WHERE creator = ? ORDER BY datetime";
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $creator);
+
+        $stmt->bind_result($gameID);
+
+        $stmt->execute();
+        $stmt->store_result();
+        $numRows = $stmt->num_rows;
+        while ($numRows> SANDBOX_GAMES_MAX_COUNT)
+        {
+            $stmt->fetch();
+            $games_id[] = $gameID;
+            $numRows--;
+        }
+        $stmt->free_result();
+        $stmt->close();        
+    }
+    return $games_id;
+}
+
+
+
+function DeleteSandboxGame($game_id)
+{
+    global $link;
+
+    $sql = "DELETE FROM sandbox_game_session WHERE id=?";
+    $group_id = 0;
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $game_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $affect=$stmt->affected_rows;
+
+        $stmt->free_result();
+        $stmt->close();
+
+        if ($affect>0)
+        {
+            return true;
+        }
+    }
+    return fastcgi_finish_request();
+}
+
+
 
 ?>
 

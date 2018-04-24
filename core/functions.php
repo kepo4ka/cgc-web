@@ -40,6 +40,8 @@ function logout($user_id)
 }
 
 
+
+
 function CreateUserSandBoxGame($user_id, $users_array)
 {
 
@@ -135,6 +137,30 @@ function GameSandboxFilesProccess($good_users_info, $last_id)
     }
 }
 
+
+
+function DeleteSandboxGameInfo($user_id)
+{
+   if ($gamesForDelete =SelectSandboxGamesforDelete($user_id))
+   {
+       foreach ($gamesForDelete as $game_id)
+       {
+           $game_dir = SANDBOX_GAMES_PATH . "/" . $game_id;
+           removeDirectory($game_dir);
+           DeleteSandboxGame ($game_id);
+       }
+   }
+}
+
+
+function removeDirectory($path) {
+    $files = glob($path . '/*');
+    foreach ($files as $file) {
+        is_dir($file) ? removeDirectory($file) : unlink($file);
+    }
+    rmdir($path);
+    return;
+}
 
 
 
