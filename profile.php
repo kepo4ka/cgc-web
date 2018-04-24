@@ -57,6 +57,7 @@ if (!isset($_GET['tab'])) {
 $tab1 = "";
 $tab2 = "";
 $tab3 = "";
+$tab4 = "";
 
 $active = "mui--is-active";
 
@@ -71,6 +72,9 @@ switch ($_GET['tab']) {
     case 3:
         $tab3 = $active;
         break;
+    case 4:
+        $tab4 = $active;
+        break;
     default:
         $tab1 = $active;
         break;
@@ -78,7 +82,8 @@ switch ($_GET['tab']) {
 
 $users = getUsersForGameStart($_SESSION['user_id']);
 $source_info = GetUserSourceInfo($_SESSION['user_id']);
-$games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
+$my_games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
+$all_sandbox_games_info_by_userId = GetSandboxGamesInfoByUserId($_SESSION['user_id']);
 
 ?>
 
@@ -125,8 +130,11 @@ require_once("core/header.php");
                     <i class="fa fa-plus-circle"></i>
                     Создать игру</a></li>
             <li class="<?= $tab3 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-3">
+                    <i class="fa fa-rocket"></i>
+                    Созданные игры</a></li>
+            <li class="<?= $tab4 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-4">
                     <i class="fa fa-history"></i>
-                    История игр</a></li>
+                    История всех игр</a></li>
         </ul>
 
         <div class="mui-tabs__pane mui-panel <?= $tab1 ?>" id="pane-default-1">
@@ -275,7 +283,7 @@ require_once("core/header.php");
 <!--                               <input type="checkbox" class="select_users_checkbox">-->
 
                                 <label class="checkbox_container">
-                                    <input type="checkbox" class="select_users_checkbox" checked="checked">
+                                    <input type="checkbox" class="select_users_checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
@@ -323,7 +331,7 @@ require_once("core/header.php");
                     <tbody>
                     <?php
                     $i = 1;
-                    foreach ($games_info as $game) {
+                    foreach ($my_games_info as $game) {
 
                         $game['result'] = json_decode($game['result'], true);
 
@@ -411,6 +419,119 @@ require_once("core/header.php");
                 </table>
             </div>
         </div>
+
+
+        <div class="mui-tabs__pane mui-panel <?= $tab4 ?>" id="pane-default-4">
+
+            <div class="mui-container-fluid ">
+
+                <table class="mui-table mui-table--bordered table_center users_info_table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th><i class="fa fa-clock-o"></i> Дата начала</th>
+                        <th><i class="fa fa-cogs"></i> Статус</th>
+                        <th><i class="fa fa-users"></i> Участники</th>
+                        <th><i class="fa fa-trophy"></i> Результат</th>
+                        <th><i class="fa fa-exclamation-circle"></i> Ошибки</th>
+                        <th><i class="fa fa-eye"></i> Визуализация</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php
+                    $i = 1;
+                    foreach ($all_sandbox_games_info_by_userId as $game) {
+
+                        $game['result'] = json_decode($game['result'], true);
+
+                        ?>
+                        <tr>
+                            <td>
+                                <?= $i ?>
+                            </td>
+                            <td class="user_id">
+                                <?= $game['id'] ?>
+                            </td>
+
+                            <td>
+
+                                <?= date("d/m/Y H:i:s", $game['datetime']) ?>
+
+                            </td>
+                            <td class="bold">
+                                <span
+                                <?php
+                                if ($game['status'] == 'ok') {
+                                    echo " class='text_green'>";
+                                    echo "Проверено";
+
+                                } elseif ($game['status'] == 'error') {
+                                    echo " class='text_red'>";
+                                    echo "Ошибка во время проверки";
+                                } elseif ($game['status'] == 'work') {
+                                    echo " class='text_blue'>";
+                                    echo "Выполняется";
+                                } else {
+                                    echo ">";
+                                    echo "В очереди";
+                                }
+                                ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php
+
+                                foreach ($game['users'] as $game_user) { ?>
+
+                                    <?= $game_user['name'] ?>
+                                    <br>
+                                    <?php
+                                } ?>
+                            </td>
+                            <td>
+
+                                <?php
+                                if ($game['result'] != "") {
+                                    foreach ($game['result'] as $result) {
+                                        echo $result['Name'] . " - " . $result['Points'] . "<br>";
+                                    }
+                                }
+                                ?>
+                            </td>
+
+                            <td>
+                                <?php
+                                if ($game['errors'] != "") {
+                                    ?>
+                                    <a class="pointer open_hide_info">Ошибки</a>
+                                    <div class="hidden_content">
+                                        <?= $game['errors'] ?>
+                                    </div>
+                                    <?php
+                                } ?>
+                            </td>
+                            <td>
+                                <?php if ($game['status'] == 'ok') { ?>
+                                    <a href="?gameid=<?= $game['id'] ?>" dataid="<?= $game['id'] ?>"
+                                       class="download_visualize_info_btn">
+                                        <button type="button" class="mui-btn mui-btn--small mui-btn--primary">Скачать
+                                        </button>
+                                    </a>
+
+                                <?php } ?>
+                            </td>
+                        </tr>
+                        <?php
+                        $i++;
+                    } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 
 </div>

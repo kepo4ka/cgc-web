@@ -10,6 +10,7 @@ define("GAMESTATES_DAT_FILE_NAME", "Visualizer.dat");
 define("GAMESTATES_JSON_FILE_NAME", "Visualizer.json");
 
 define("UPLOAD_TIME_OUT", 10);
-define("SANDBOX_CREATE_TIME_OUT", 20);
+define("SANDBOX_CREATE_TIME_OUT", 10);
+define("SANDBOX_GAMES_MAX_COUNT", 10);
 
 ?>

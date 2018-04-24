@@ -328,7 +328,7 @@ function GetSandboxGameInfoByCreator($user_id)
         $res = $stmt->get_result();
 
         while ($row = $res->fetch_assoc()) {
-    
+
             $row['users'] = GetUsersInGroup($row['users_group']);
             $result[] = $row;
         }
@@ -336,6 +336,36 @@ function GetSandboxGameInfoByCreator($user_id)
     }
     return $result;
 }
+
+
+function GetSandboxGamesInfoByUserId($user_id)
+{
+    global $link;
+
+    $sql = "SELECT * FROM sandbox_game_session, users_group WHERE users_group.user_id=? AND users_group.group_id=sandbox_game_session.users_group ORDER BY sandbox_game_session.id DESC";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $user_id);
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+
+            $row['users'] = GetUsersInGroup($row['users_group']);
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
+
+
 
 
 function GetALLSandboxGames()
