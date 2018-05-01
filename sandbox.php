@@ -34,6 +34,10 @@ require_once("core/header.php");
 <div id="content-wrapper" class=" mui-container-fluid">
     <div class="mui-container-fluid mui-panel">
         <div class="mui-container-fluid ">
+            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="right">
+                <button type="button" class="mui-btn mui-btn--raised">Обновить
+                </button>
+            </a>
 
             <div class="mui--text-display1">Пользовательские игры</div>
             <div class="mui-container-fluid">
@@ -54,6 +58,7 @@ require_once("core/header.php");
                 <tbody>
                 <?php
                 $i = 1;
+                if (isset($games_info)) {
                 foreach ($games_info as $game) {
 
                     $game['result'] = json_decode($game['result'], true);
@@ -138,6 +143,7 @@ require_once("core/header.php");
                     </tr>
                     <?php
                     $i++;
+                }
                 } ?>
                 </tbody>
             </table>

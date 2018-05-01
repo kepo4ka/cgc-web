@@ -44,25 +44,27 @@ require_once("core/header.php");
                 <tbody>
                 <?php
                 $i=1;
-                foreach ($users as $info) {
-                    ?>
-                    <tr>
-                        <td>
-                            <?= $i ?>
-                        </td>
-                        <td class="source_info">
+                if (isset($users) && count($users)>0) {
+                    foreach ($users as $info) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?= $i ?>
+                            </td>
+                            <td class="source_info">
 
                                 <?= $info['name'] ?>
 
-                        </td>
-                        <td class="source_info">
-                            <?= $info['points'] ?>
-                        </td>
+                            </td>
+                            <td class="source_info">
+                                <?= $info['points'] ?>
+                            </td>
 
-                    </tr>
-                <?php
-                $i++;
-                } ?>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
+                }?>
 
 
                 </tbody>

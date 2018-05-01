@@ -27,31 +27,29 @@ if (isset($_GET['gameid'])) {
 $uploadblock = false;
 $sandboxgame_createblock = false;
 
+$time = time() + 3600;
+$lastuploadtime = SelectUserLastUploadTime($_SESSION['user_id']);
+$lastcreatedgameTime = SelectSandboxGameUserCreateTime($_SESSION['user_id']);
 
-if (isset($_SESSION['upload_time'])) {
-    $time = time();
-    if (($time - $_SESSION['upload_time']) < UPLOAD_TIME_OUT) {
-        $_SESSION['upload_block'] = true;
-    } else {
-        unset($_SESSION['upload_block']);
-    }
+
+if (($time - $lastuploadtime) < UPLOAD_TIME_OUT) {
+    $_SESSION['upload_block'] = true;
+} else {
+    unset($_SESSION['upload_block']);
 }
+
 if (isset($_SESSION['upload_block']) && $_SESSION['upload_block'] == true) {
     $uploadblock = true;
 }
-if (isset($_SESSION['sandbox_create_time'])) {
-    $time = time();
-    if ($time - $_SESSION['sandbox_create_time'] < SANDBOX_CREATE_TIME_OUT) {
-        $_SESSION['sandbox_create_block'] = true;
-    } else {
-        unset($_SESSION['sandbox_create_block']);
-    }
+
+if (($time - $lastcreatedgameTime) < SANDBOX_CREATE_TIME_OUT) {
+    $_SESSION['sandbox_create_block'] = true;
+} else {
+    unset($_SESSION['sandbox_create_block']);
 }
+
 if (isset($_SESSION['sandbox_create_block']) && $_SESSION['sandbox_create_block'] == true) {
     $sandboxgame_createblock = true;
-}
-if (!isset($_GET['tab'])) {
-    $_GET['tab'] = 1;
 }
 
 $tab1 = "";
@@ -61,10 +59,14 @@ $tab4 = "";
 
 $active = "mui--is-active";
 
-switch ($_GET['tab']) {
+if (!isset($_SESSION['tab_id'])) {
+    $_SESSION['tab_id'] = 1;
+    $tab1 = $active;
+}
+
+switch ($_SESSION['tab_id']) {
     case 1:
         $tab1 = $active;
-
         break;
     case 2:
         $tab2 = $active;
@@ -77,6 +79,7 @@ switch ($_GET['tab']) {
         break;
     default:
         $tab1 = $active;
+        $_SESSION['tab_id'] = 1;
         break;
 }
 
@@ -125,17 +128,21 @@ require_once("core/header.php");
     <div class="mui-container-fluid">
 
         <ul class="mui-tabs__bar flex_ul">
-            <li class="<?= $tab1 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-1">
+            <li class="<?= $tab1 ?>" data-id="1"><a class="pointer" data-mui-toggle="tab"
+                                                    data-mui-controls="pane-default-1">
                     <i class="fa fa-user"></i>
                     Моя стратегия</a>
             </li>
-            <li class="<?= $tab2 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-2">
+            <li class="<?= $tab2 ?> tab2" data-id="2"><a class="pointer" data-id="1" data-mui-toggle="tab"
+                                                         data-mui-controls="pane-default-2">
                     <i class="fa fa-plus-circle"></i>
                     Создать игру</a></li>
-            <li class="<?= $tab3 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-3">
+            <li class="<?= $tab3 ?> tab3" data-id="3"><a class="pointer" data-mui-toggle="tab"
+                                                         data-mui-controls="pane-default-3">
                     <i class="fa fa-rocket"></i>
                     Созданные игры</a></li>
-            <li class="<?= $tab4 ?>"><a class="pointer" data-mui-toggle="tab" data-mui-controls="pane-default-4">
+            <li class="<?= $tab4 ?> tab4" data-id="4"><a class="pointer" data-mui-toggle="tab"
+                                                         data-mui-controls="pane-default-4">
                     <i class="fa fa-history"></i>
                     История всех игр</a></li>
         </ul>
@@ -323,6 +330,10 @@ require_once("core/header.php");
         <div class="mui-tabs__pane mui-panel <?= $tab3 ?>" id="pane-default-3">
 
             <div class="mui-container-fluid ">
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
+                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                    </button>
+                </a>
 
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
@@ -432,8 +443,11 @@ require_once("core/header.php");
 
 
         <div class="mui-tabs__pane mui-panel <?= $tab4 ?>" id="pane-default-4">
-
             <div class="mui-container-fluid ">
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
+                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                    </button>
+                </a>
 
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
