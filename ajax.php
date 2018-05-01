@@ -35,6 +35,9 @@ switch ($_POST['type']) {
             }
         }
     return;
+    case "setprofiletab";
+        $_SESSION['tab_id'] = $_POST['tab_id'];
+        return;
 }
 
 

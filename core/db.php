@@ -119,47 +119,6 @@ function getUser($user_id)
 }
 
 
-//
-//function ChangeSourceFileInfo($user_id, $verstion, $text)
-//{
-//    global $link;
-//    $sql = "SELECT user_id FROM sources WHERE user_id=?";
-//
-//    if (!$stmt = $link->prepare($sql)) {
-//        die(mysqli_error($link));
-//    }
-//
-//  //  mysqli_stmt_bind_param($stmt, "i", $user_id);
-//    $stmt->bind_param("i",$user_id);
-//    $stmt->execute();
-//    $stmt->store_result();
-//    $stmt->fetch();
-//    $num_of_rows = $stmt->num_rows;
-//    $stmt->free_result();
-//    $stmt->close();
-//
-//    InsertSourceFileInfo($user_id, $text);
-//
-////    if ($num_of_rows < 1) {
-////        echo "num_of_rows < 1";
-////        if (InsertSourceFileInfo($user_id, $text)) {
-////            echo "Вставлена информация о пути исходников для пользователя " . $user_id;
-////        } else {
-////            echo "Не удалось встатвить информацию о исходниках";
-////        }
-////    } else {
-////        echo "num_of_rows > 1";
-////        if (UpdateSourceFileInfo($user_id, $text)) {
-////            echo "Обновлена информация об исходниках";
-////        } else {
-////            echo "Не обновлена информация о исходниках";
-////        }
-////    }
-//
-//
-//}
-
-
 function GetLastSourceID()
 {
     global $link;
@@ -311,6 +270,29 @@ function GetUserSourceInfoOnlyCompiledANDUsed($user_id)
 }
 
 
+function GetALLUsersSourceInfoOnlyCompiledANDUsed()
+{
+    global $link;
+
+    $sql = "SELECT * FROM sources, users WHERE status='ok' AND used=1 AND sources.user_id = users.id ORDER  BY points DESC";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
+
 function GetSandboxGameInfoByCreator($user_id)
 {
     global $link;
@@ -389,6 +371,29 @@ function GetALLSandboxGames()
     }
     return $result;
 }
+
+function GetALLRaingGames()
+{
+    global $link;
+
+    $sql = "SELECT * FROM rating";
+
+    $result = array();
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        while ($row = $res->fetch_assoc()) {
+
+            $row['users'] = GetUsersInGroup($row['users_group']);
+            $result[] = $row;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
+}
+
 
 
 
@@ -497,6 +502,30 @@ function InsertGameINFOSandbox($group_id, $user_id)
 }
 
 
+function InsertGameINFORating($group_id)
+{
+    global $link;
+
+    $sql = "INSERT INTO rating (datetime, users_group, status) VALUES (?,?, 'wait')";
+    $last_id = -1;
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $time = time() + 3600;
+        $stmt->bind_param("ii", $time, $group_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $last_id = $stmt->insert_id;
+
+        if ($stmt->affected_rows<1)
+        {
+            return false;
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+    return $last_id;
+}
+
+
 function InsertUserGroup($users_array)
 {
     global $link;
@@ -528,6 +557,61 @@ function InsertUserGroup($users_array)
         $stmt->close();
     }
     return $group_id;
+}
+
+
+function SelectSandboxGameUserCreateTime($user_id)
+{
+    global $link;
+
+
+    $sql = "SELECT datetime FROM sandbox_game_session WHERE creator = ? ORDER BY datetime DESC";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $user_id);
+
+        $stmt->bind_result($time);
+
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->fetch();
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+    return $time;
+}
+
+
+
+function SelectUserLastUploadTime($user_id)
+{
+    global $link;
+
+
+    $sql = "SELECT upload_time FROM sources WHERE user_id = ? ORDER BY upload_time DESC";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $user_id);
+
+        $stmt->bind_result($time);
+
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->fetch();
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+    return $time;
 }
 
 

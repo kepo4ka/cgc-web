@@ -191,6 +191,9 @@ a.pointer {
 a.navbar_float_right {
   float: right;
 }
+.right {
+  float: right;
+}
 
 /* Change the color of links on hover */
 .navbar a:hover {

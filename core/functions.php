@@ -45,6 +45,20 @@ function logout($user_id)
 function CreateUserSandBoxGame($user_id, $users_array)
 {
 
+   // $time = SelectTimeFromSandboxGame($user_id);
+//    if ($time>0)
+//    {
+//        $now = $time + 3600;
+//
+//        if ( ($now - $time) < SANDBOX_CREATE_TIME_OUT)
+//        {
+//            echo "Ограничение на создание игр - " . SANDBOX_CREATE_TIME_OUT . " секунд";
+//            return;
+//        }
+//    }
+//    
+    
+    
     $good_users = array();
 
     foreach ($users_array as $user) {
@@ -91,6 +105,30 @@ function CreateUserSandBoxGame($user_id, $users_array)
     
     echo "good " . $last_id;
 }
+
+
+
+
+function CreateRatingGame($group)
+{
+    $last_id = InsertGameINFORating($group);
+    if ($last_id < 0) {
+        echo "InsertGameINFORating last_id seterror";
+        return;
+    }
+
+ //   GameRatingFilesProccess($good_users_info, $last_id);
+
+    echo "good " . $last_id;
+}
+
+
+
+
+
+
+
+
 
 function GameSandboxFilesProccess($good_users_info, $last_id)
 {

@@ -47,9 +47,26 @@ $(document).ready(function () {
     });
 
 
+    $("ul.mui-tabs__bar li").on("click", function () {
+        AjaxSendProfileTab($(this).attr("data-id"));
+    });
 
 
-
+    function AjaxSendProfileTab(tab_id) {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "setprofiletab",
+                "tab_id": tab_id,
+                "user_id": myUserId
+            },
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
 
 
     function AjaxChangeSelectedSource(source_id, visual_id) {
@@ -113,7 +130,7 @@ $(document).ready(function () {
                 NotifyMessage(message);
 
                 setTimeout(function () {
-                    window.location.href = "/profile.php?tab=3";
+                    AjaxSendProfileTab(3);
                 }, 1500);
             }
         });
