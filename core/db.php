@@ -365,6 +365,7 @@ function GetALLSandboxGames()
         while ($row = $res->fetch_assoc()) {
 
             $row['users'] = GetUsersInGroup($row['users_group']);
+            $row['creator_name'] = getUser($row['creator']);
             $result[] = $row;
         }
         mysqli_stmt_close($stmt);

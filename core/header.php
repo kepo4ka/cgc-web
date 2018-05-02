@@ -4,8 +4,7 @@
     <div class="navbar" id="myNavbar">
         <a href="/">NOSU Code Game Challange</a>
         <a href="users.php">Участники</a>
-        <a href="sandbox.php">Песочница</a>
-        <a href="rating.php">Рейтинг</a>
+        <a href="sandbox.php">Песочница</a>       
 
         <?php if (!isset($_SESSION['user_id'])) { ?>
             <a class="login_btn pointer navbar_float_right">

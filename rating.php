@@ -1,4 +1,9 @@
 <?php
+
+header("Location: error.php");
+exit;
+
+
 require_once("core/config.php");
 
 session_start();
