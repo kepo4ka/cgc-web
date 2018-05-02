@@ -30,7 +30,7 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
         if ($type !== "cs")
         {
 
-            $err[] = "Неверное расширение файла, пока только C#";
+            $err[] = "Неверное расширение файла, пока только *.cs (C#)";
         }
 
 
@@ -38,9 +38,14 @@ if(isset($_POST['upload']) && defined("SOURCE_PATH")) {
             $err[] = $errUpload[$userFile['error']];
         }
 
+        if ($_FILES['source']['size'] > 2097152)
+        {
+            $err = "Размер файла превысил 2 mb";
+        }
+
         if (!empty($err))
         {
-            print_r($err);
+            $_SESSION['upload_error'] = $err;
         }
         else {
 

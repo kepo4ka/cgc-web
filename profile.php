@@ -162,12 +162,27 @@ require_once("core/header.php");
             </form>
             <div class="mui-divider"></div>
             <div class="mui-container-fluid source_info_div">
+
+                <div class="mui-container-fluid mui--text-title bold">
+                    <?php if (isset($_SESSION['upload_error'])) {
+                       foreach ($_SESSION['upload_error'] as $error)
+                       {
+                           echo $error . "<br>";
+                       }
+                        unset($_SESSION['upload_error']);
+                    } ?>
+                </div>
+                <br>
+
+
                 <div class="mui-container-fluid mui--text-title bold">
                     <?php if ($uploadblock) {
                         echo "Ограничение на отправку решений - " . UPLOAD_TIME_OUT . " секунд";
                     } ?>
                 </div>
                 <br>
+
+
 
                 <table class="mui-table mui-table--bordered table_center uploaded_info_table">
                     <thead>
