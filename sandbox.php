@@ -8,8 +8,12 @@ require_once("core/functions.php");
 
 
 if (isset($_GET['gameid'])) {
-    $path = SANDBOX_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_DAT_FILE_NAME;
+  //  $path = SANDBOX_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_DAT_FILE_NAME;
+   // file_force_download($path);
+    $path = SANDBOX_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
+    print_r($path);
     file_force_download($path);
+
     unset($_GET['gameid']);
     header("Location: /");
 }
@@ -47,6 +51,7 @@ require_once("core/header.php");
                     <th>#</th>
                     <th>ID</th>
                     <th> <i class="fa fa-clock-o"></i> Дата начала</th>
+                    <th> <i class="fa fa-user"></i> Создатель</th>
                     <th> <i class="fa fa-cogs"></i> Статус</th>
                     <th> <i class="fa fa-users"></i> Участники</th>
                     <th> <i class="fa fa-trophy"></i> Результат</th>
@@ -77,6 +82,10 @@ require_once("core/header.php");
                             <?= date("d/m/Y H:i:s", $game['datetime']) ?>
 
                         </td>
+                        <td>
+                            <?=$game['creator_name']?>
+                        </td>
+                        
                         <td class="bold">
                             <span
                             <?php

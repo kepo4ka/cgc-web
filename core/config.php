@@ -9,6 +9,7 @@ define("USER_CLASS_DLL_NAME", "User_class.dll");
 
 define("GAMESTATES_DAT_FILE_NAME", "Visualizer.dat");
 define("GAMESTATES_JSON_FILE_NAME", "Visualizer.json");
+define("GAMESTATES_COMPRESSED_JSON_FILE_NAME", "VisualizerJSON.gz");
 
 define("UPLOAD_TIME_OUT", 10);
 define("SANDBOX_CREATE_TIME_OUT", 10);
