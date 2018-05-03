@@ -123,11 +123,12 @@ $(document).ready(function () {
                 if (res[0]=="good")
                 {
                     message = "Игра №" + res[1] + " успешно добавлена в очередь. Следите за её состоянием на вкладке История Игр"
+                    NotifyMessage(message);
                 }
                 else {
                     message = response;
+                    NotifyERRORMessage(message);
                 }
-                NotifyMessage(message);
 
                 setTimeout(function () {
                     AjaxSendProfileTab(3);
