@@ -17,14 +17,13 @@ switch ($_POST['type']) {
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
             print_r($_POST['users_array']);
             print_r(count($_POST['users_array']));
-            //            if (count($_POST['users_array']>3))
-//            {
-//                echo "Ошибка - Игроков не может быть больше 4";
-//                exit;
-//            }
-//            CreateUserSandBoxGame($_POST['user_id'], $_POST['users_array']);
-//            $_SESSION['sandbox_create_time'] = time();
-//            DeleteSandboxGameInfo($_POST['user_id']);
+            if (count($_POST['users_array']) > 3) {
+                echo "Ошибка - Игроков не может быть больше 4";
+                exit;
+            }
+            CreateUserSandBoxGame($_POST['user_id'], $_POST['users_array']);
+            $_SESSION['sandbox_create_time'] = time();
+            DeleteSandboxGameInfo($_POST['user_id']);
         }
         return;
 
