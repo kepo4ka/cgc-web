@@ -23,8 +23,25 @@ require_once("core/header.php");
             $message = "Пройдите авторизацию";
         }
         ?>
+
+
+
         <div class="mui--text-headline"><?=$message?></div>
-        <a class="login_btn pointer">Войти в личный кабинет</a>
+
+        <form action="core/auth.php" method="post" class="mui-form auth_form block">
+<!--            <legend>Авторизация</legend>-->
+            <div class="mui-textfield">
+                <input type="text" required name="login" placeholder="Логин">
+            </div>
+            <div class="mui-textfield">
+                <input type="password" required name="password" placeholder="Пароль">
+            </div>
+
+            <button type="submit" name="auth" class="mui-btn mui-btn--raised">Войти</button>
+        </form>
+
+
+<!--        <a class="login_btn pointer">Войти в личный кабинет</a>-->
        
     </div>
 </div>
