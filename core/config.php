@@ -11,6 +11,8 @@ define("GAMESTATES_DAT_FILE_NAME", "Visualizer.dat");
 define("GAMESTATES_JSON_FILE_NAME", "Visualizer.json");
 define("GAMESTATES_COMPRESSED_JSON_FILE_NAME", "VisualizerJSON.gz");
 
+define("GAMESTATES_COMMANDS_UNITY", "UserCommandsUnity.txt");
+
 define("UPLOAD_TIME_OUT", 10);
 define("SANDBOX_CREATE_TIME_OUT", 10);
 define("SANDBOX_GAMES_MAX_COUNT", 5);

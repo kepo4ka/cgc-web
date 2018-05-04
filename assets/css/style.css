@@ -194,6 +194,12 @@ a.navbar_float_right {
 .right {
   float: right;
 }
+.block{
+  display: block;
+}
+.textarea {
+  resize: vertical;
+}
 
 /* Change the color of links on hover */
 .navbar a:hover {
