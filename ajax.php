@@ -15,8 +15,6 @@ require_once("core/functions.php");
 switch ($_POST['type']) {
     case "createusersandboxgame":
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
-            print_r($_POST['users_array']);
-            print_r(count($_POST['users_array']));
             if (count($_POST['users_array']) > 3) {
                 echo "Ошибка - Игроков не может быть больше 4";
                 exit;
