@@ -6,6 +6,8 @@
  * Time: 9:02
  */
 
+header("Location: error.php");
+ 
 if (!isset($_POST['users']))
 {
     exit;
@@ -20,11 +22,11 @@ $users = array();
 
 foreach ($userssplit as $str)
 {
-    $linesplit = explode(" ", $str);
+    $linesplit = explode(";", $str);
     $user = array();
-    $user['name'] = $linesplit[0];
-    $user['login']=$linesplit[1];
-    $user['password'] = $linesplit[2];
+    $user['login'] = $linesplit[0];
+    $user['password']=$linesplit[1];
+    $user['name'] = $linesplit[2];
 
     $users[] = $user;
     unset($user);
