@@ -561,6 +561,34 @@ function InsertUserGroup($users_array)
 }
 
 
+function InsertUsers($users_array)
+{
+    global $link;
+
+
+    $sql = "INSERT INTO users (login, name, password) VALUES (?,?,?)";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        foreach ($users_array as $user) {
+            $stmt->bind_param("sss", $user['login'], $user['name'], $user['password']);
+            $stmt->execute();
+        }
+        unset($user);
+        $stmt->store_result();
+        $af = $stmt->affected_rows;
+
+        $stmt->free_result();
+        $stmt->close();
+        if ($af >0)
+        {
+            return count($users_array);
+        }
+    }
+    return -1;
+}
+
+
+
 function SelectSandboxGameUserCreateTime($user_id)
 {
     global $link;
