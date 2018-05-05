@@ -166,7 +166,7 @@ require_once("core/header.php");
             </a>
 
             <form action="profile.php?tab=1" method="post" class="mui-form" enctype='multipart/form-data'>
-                <input type="file" required name="source" <?php if ($uploadblock) {
+                <input type="file" required name="source" accept=".cs" <?php if ($uploadblock) {
                     echo "disabled";
                 } ?> />
                 <button type="submit" name="upload" class="mui-btn mui-btn--primary btn-big-width" <?php if ($uploadblock) {
