@@ -354,7 +354,7 @@ function GetALLSandboxGames()
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox_game_session";
+    $sql = "SELECT * FROM sandbox_game_session ORDER BY datetime DESC";
 
     $result = array();
 
