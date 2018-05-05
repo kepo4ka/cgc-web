@@ -17,7 +17,7 @@ require_once("core/head.php");
   ?>
     <div id="content-wrapper" class="mui--text-center">
       <div class="mui--appbar-height"></div>
-      <img src="assets/img/bomber.png" alt="">
+      <img src="assets/img/bomber.png" alt="bomberLogo">
 
       <br>
       <div class="mui--text-display1 row wow zoomInDown">
@@ -32,7 +32,7 @@ require_once("core/head.php");
       <br>
 
       <div class="mui-container-fluid mui-panel">
-        <h1 class="mui--divider-bottom">Описание</h1>
+        <h1 class="mui--divider-bottom description_title">Описание</h1>
 
         <div class="mui-container-fluid">
           <p>Приглашаем Вас поучастовать в конкурсе игровых стратегий "Game of Thrones":</p>
