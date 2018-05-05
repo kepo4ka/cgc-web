@@ -40,7 +40,6 @@ $sandboxgame_createblock = false;
 $time = time() + 3600;
 $lastuploadtime = SelectUserLastUploadTime($_SESSION['user_id']);
 $lastcreatedgameTime = SelectSandboxGameUserCreateTime($_SESSION['user_id']);
-print_r($time - $lastcreatedgameTime);
 
 if (($time - $lastuploadtime) < UPLOAD_TIME_OUT) {
     $_SESSION['upload_block'] = true;

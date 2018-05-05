@@ -19,6 +19,18 @@ switch ($_POST['type']) {
                 echo "Ошибка - Игроков не может быть больше 4";
                 exit;
             }
+            $lastcreatedgameTime = SelectSandboxGameUserCreateTime($_SESSION['user_id']);
+            if (isset($lastcreatedgameTime))
+            {
+                $time = time() +3600;
+                if (($time - $lastcreatedgameTime) <SANDBOX_CREATE_TIME_OUT)
+                {
+                    $dif = SANDBOX_CREATE_TIME_OUT - ($time - $lastcreatedgameTime);
+                    echo "Секунд до следующого возможного создания игры - " . $dif;
+                    return;
+                }
+            }
+
             CreateUserSandBoxGame($_POST['user_id'], $_POST['users_array']);
             $_SESSION['sandbox_create_time'] = time();
             DeleteSandboxGameInfo($_POST['user_id']);

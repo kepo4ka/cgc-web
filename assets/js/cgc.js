@@ -122,7 +122,7 @@ $(document).ready(function () {
 
                 if (res[0]=="good")
                 {
-                    $(".game_start_btn").prop("disabled", true);
+                    $(".game_start_btn").attr("disabled", true);
                     message = "Игра №" + res[1] + " успешно добавлена в очередь. Следите за её состоянием на вкладке История Игр"
                     NotifyMessage(message);
                 }
