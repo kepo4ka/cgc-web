@@ -6,7 +6,7 @@
  * Time: 9:02
  */
 
-header("Location: error.php");
+// header("Location: error.php");
  
 if (!isset($_POST['users']))
 {

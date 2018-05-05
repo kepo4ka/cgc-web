@@ -108,6 +108,58 @@ function CreateUserSandBoxGame($user_id, $users_array)
 
 
 
+function test()
+{
+
+   // $time = SelectTimeFromSandboxGame($user_id);
+//    if ($time>0)
+//    {
+//        $now = $time + 3600;
+//
+//        if ( ($now - $time) < SANDBOX_CREATE_TIME_OUT)
+//        {
+//            echo "Ограничение на создание игр - " . SANDBOX_CREATE_TIME_OUT . " секунд";
+//            return;
+//        }
+//    }
+//    
+   
+
+    $good_users_info = GetALLCompiledUsers();  
+    $good_bots_info = GetALLCompiledBots();
+   
+
+
+
+  
+    $diff = 4- count($good_users_info)%4;
+
+    $i=0;
+    while($i<$diff)
+    {
+        $good_users_info[] = $good_bots_info[$i];
+        $i++;
+    }
+
+//  echo  $diff;
+//     echo "<pre>";    
+//    print_r($good_users_info);
+//     echo "</pre>";
+//     echo "<br>";
+
+shuffle($good_users_info);
+
+
+
+
+  
+  
+}
+
+
+
+
+
 
 function CreateRatingGame($group)
 {

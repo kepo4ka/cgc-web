@@ -3,7 +3,7 @@ require_once("core/config.php");
 session_start();
 require_once("core/db.php");
 require_once ("core/functions.php");
-$users = getUsers();
+$users = getOnlyUsers();
 ?>
 
 <!doctype html>
@@ -85,7 +85,3 @@ require_once("core/footer.php");
 </body>
 </html>
 
-
-
-
-?>

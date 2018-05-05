@@ -66,6 +66,90 @@ function getUsers()
 }
 
 
+function getOnlyUsers()
+{
+    global $link;
+    $sql = "SELECT DISTINCT users.id, users.points, users.name FROM users WHERE users.is_bot=0 ORDER BY points DESC";
+    $users_array = array();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        /* bind parameters for markers */
+        // mysqli_stmt_bind_param($stmt, "i", "1");
+
+        /* execute query */
+        $stmt->execute();
+
+        /* bind result variables */
+        $res = $stmt->get_result();
+
+        /* fetch value */
+        while ($row = $res->fetch_assoc()) {
+            $users_array[] = $row;
+        }
+
+        /* close statement */
+        mysqli_stmt_close($stmt);
+        return $users_array;
+    }
+}
+
+function GetALLCompiledBots()
+{
+    global $link;
+    $sql = "SELECT users.id, users.points, users.name FROM users, sources WHERE users.id=sources.user_id AND users.is_bot=1 AND sources.status='ok' AND sources.used=1 ORDER BY points DESC";
+    $users_array = array();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        /* bind parameters for markers */
+        // mysqli_stmt_bind_param($stmt, "i", "1");
+
+        /* execute query */
+        $stmt->execute();
+
+        /* bind result variables */
+        $res = $stmt->get_result();
+
+        /* fetch value */
+        while ($row = $res->fetch_assoc()) {
+            $users_array[] = $row;
+        }
+
+        /* close statement */
+        mysqli_stmt_close($stmt);
+        return $users_array;
+    }  
+}
+
+function GetALLCompiledUsers () {
+    global $link;
+    $sql = "SELECT users.id, users.points, users.name FROM users, sources WHERE users.id=sources.user_id AND users.is_bot=0 AND sources.status='ok' AND sources.used=1 ORDER BY points DESC";
+    $users_array = array();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        /* bind parameters for markers */
+        // mysqli_stmt_bind_param($stmt, "i", "1");
+
+        /* execute query */
+        $stmt->execute();
+
+        /* bind result variables */
+        $res = $stmt->get_result();
+
+        /* fetch value */
+        while ($row = $res->fetch_assoc()) {
+            $users_array[] = $row;
+        }
+
+        /* close statement */
+        mysqli_stmt_close($stmt);
+        return $users_array;
+    }
+}
+
+
 function getUsersForGameStart($user_id)
 {
     global $link;
@@ -266,6 +350,7 @@ function GetUserSourceInfoOnlyCompiledANDUsed($user_id)
         }
         mysqli_stmt_close($stmt);
     }
+    
     return $result;
 }
 
@@ -432,7 +517,8 @@ function dbChecklogin($login, $password)
     $sql = "SELECT id, name FROM users WHERE login = ? AND password = ?";
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
-        /* bind parameters for markers */
+        $password = md5($password . " jopa");
+
         $stmt->bind_param("ss", $login, $password);
 
         $stmt->bind_result($result[0], $result[1]);
@@ -570,6 +656,7 @@ function InsertUsers($users_array)
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
         foreach ($users_array as $user) {
+            $user['password'] = md5($user['password'] . " jopa");
             $stmt->bind_param("sss", $user['login'], $user['name'], $user['password']);
             $stmt->execute();
         }

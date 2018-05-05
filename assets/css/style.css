@@ -293,6 +293,10 @@ a.navbar_float_right {
   .navbar_float_right {
     float: none;
   }
+  .update_btn {
+    width: 100%;
+    float: none !important;
+  }
 
 }
 
@@ -386,8 +390,6 @@ a.navbar_float_right {
   border-radius: 50%;
   background: white;
 }
-
-
 
 
 

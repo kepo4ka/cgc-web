@@ -163,8 +163,8 @@ require_once("core/header.php");
         <div class="mui-tabs__pane mui-panel <?= $tab1 ?>" id="pane-default-1">
 
             <div class="mui-container-fluid">
-            <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
-                <button type="button" class="mui-btn mui-btn--raised">Обновить
+            <a href="<?=$_SERVER['REQUEST_URI']?>" class="right update_btn">
+                <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                 </button>
             </a>
 
@@ -292,8 +292,8 @@ require_once("core/header.php");
 
             <div class="mui-container-fluid">
 
-                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
-                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right update_btn">
+                    <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                     </button>
                 </a>
 
@@ -370,8 +370,8 @@ require_once("core/header.php");
         <div class="mui-tabs__pane mui-panel <?= $tab3 ?>" id="pane-default-3">
 
             <div class="mui-container-fluid ">
-                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
-                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right update_btn">
+                    <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                     </button>
                 </a>
 
@@ -492,8 +492,8 @@ require_once("core/header.php");
 
         <div class="mui-tabs__pane mui-panel <?= $tab4 ?>" id="pane-default-4">
             <div class="mui-container-fluid ">
-                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
-                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right update_btn">
+                    <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                     </button>
                 </a>
 

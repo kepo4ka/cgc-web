@@ -1,7 +1,18 @@
 <?php
 
-header("Location: error.php");
-exit;
+
+
+
+
+
+
+
+
+
+
+
+// header("Location: error.php");
+// exit;
 
 
 require_once("core/config.php");
@@ -10,6 +21,13 @@ session_start();
 
 require_once("core/db.php");
 require_once("core/functions.php");
+
+
+
+test();
+
+ exit;
+
 
 
 if (isset($_GET['gameid'])) {
