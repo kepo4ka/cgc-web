@@ -136,6 +136,7 @@ require_once("core/header.php");
 
     <div class="mui-container-fluid">
 
+
         <ul class="mui-tabs__bar flex_ul">
             <li class="<?= $tab1 ?>" data-id="1"><a class="pointer" data-mui-toggle="tab"
                                                     data-mui-controls="pane-default-1">
@@ -158,6 +159,12 @@ require_once("core/header.php");
 
         <div class="mui-tabs__pane mui-panel <?= $tab1 ?>" id="pane-default-1">
 
+            <div class="mui-container-fluid">
+            <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
+                <button type="button" class="mui-btn mui-btn--raised">Обновить
+                </button>
+            </a>
+
             <form action="profile.php?tab=1" method="post" class="mui-form" enctype='multipart/form-data'>
                 <input type="file" required name="source" <?php if ($uploadblock) {
                     echo "disabled";
@@ -169,7 +176,7 @@ require_once("core/header.php");
                     Отправить
                 </button>
             </form>
-            <div class="mui-divider"></div>
+<!--            <div class="mui-divider"></div>-->
             <div class="mui-container-fluid source_info_div">
 
                 <div class="mui-container-fluid mui--text-title bold">
@@ -276,10 +283,16 @@ require_once("core/header.php");
                 </table>
             </div>
         </div>
+            </div>
 
         <div class="mui-tabs__pane mui-panel <?= $tab2 ?>" id="pane-default-2">
 
             <div class="mui-container-fluid">
+
+                <a href="<?=$_SERVER['REQUEST_URI']?>" class="right">
+                    <button type="button" class="mui-btn mui-btn--raised">Обновить
+                    </button>
+                </a>
 
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
