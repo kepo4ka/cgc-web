@@ -1,5 +1,5 @@
 <?php
-$title = "Code Game Challenge Test";
+$title = "Game of Thrones CGC - конкурс игровых стратегий СОГУ";
 
 ?>
 

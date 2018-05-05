@@ -21,8 +21,7 @@ require_once("core/head.php");
 
       <br>
       <div class="mui--text-display1 row wow zoomInDown">
-        NOSU Code Game Challange</div>
-    
+        Game of Thrones</div>
       <div class="mui--text-display5 row wow fadeIn">
         Конкурс игровых стратегий</div>
       <br>
@@ -36,9 +35,14 @@ require_once("core/head.php");
         <h1 class="mui--divider-bottom">Описание</h1>
 
         <div class="mui-container-fluid">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequuntur cupiditate doloremque ea ipsa
-          iure optio qui sequi similique temporibus! Accusantium alias aliquid deleniti dolorum laborum nam quam
-          repudiandae temporibus?
+          <p>Приглашаем Вас поучастовать в конкурсе игровых стратегий "Game of Thrones":</p>
+          <p>Используя свои навыки программирования, создайте своего Бота (игровую стратегию), который будет биться с Ботами других участников в предлагаемом игровом мире.</p>
+
+          <code> <p> Борьба за Железный трон в Королевской Гавани не прекращается ни на секунду. Чтобы восстановить свою власть в столице, королева Серсея пошла на крайние меры – взорвала главный храм, Великую септу Бейлора. Это заставило её соперников перейти к решительным действиям: они начали устраивать подрывы по всему городу. В ответ на столь наглые действия Серсея приказала уничтожить целые районы, где могут скрываться ее враги, и пообещала оплатить работу золотом. И так небо над Королевской гаванью затянулось дымом пожаров. Вы управляете одним из подрывников Серсеи. Ваша задача – уничтожить как можно больше построек и собрать как можно больше снаряжения. В каждый район было послано до 4 подрывников с приказом уничтожать любого, кто встретится на пути.</p>
+          </code>
+          <strong> Вся информация, правила исходники и прочие материалы, связанные с конкурсом игровых стратегий можно найти на
+          <a href="https://github.com/nosucgc/NOSUCGC">GITHUB</a></strong>
+          <p>По всем возникшим вопросам обращаться в</p>
         </div>
       </div>
 
