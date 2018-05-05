@@ -98,6 +98,9 @@ DeleteSandboxGameInfo($_SESSION['user_id']);
 $users = getUsersForGameStart($_SESSION['user_id']);
 $source_info = GetUserSourceInfo($_SESSION['user_id']);
 $my_games_info = GetSandboxGameInfoByCreator($_SESSION['user_id']);
+
+
+
 $all_sandbox_games_info_by_userId = GetSandboxGamesInfoByUserId($_SESSION['user_id']);
 
 ?>

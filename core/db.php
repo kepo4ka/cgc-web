@@ -324,7 +324,7 @@ function GetSandboxGamesInfoByUserId($user_id)
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox_game_session, users_group WHERE users_group.user_id=? AND users_group.group_id=sandbox_game_session.users_group ORDER BY sandbox_game_session.id DESC";
+    $sql = "SELECT sandbox_game_session.id, sandbox_game_session.users_group, sandbox_game_session.datetime, sandbox_game_session.status, sandbox_game_session.creator, sandbox_game_session.errors, sandbox_game_session.result  FROM sandbox_game_session, users_group WHERE users_group.user_id=? AND users_group.group_id=sandbox_game_session.users_group ORDER BY sandbox_game_session.id DESC";
 
     $result = array();
 
