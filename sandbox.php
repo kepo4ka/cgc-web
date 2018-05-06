@@ -6,12 +6,6 @@ session_start();
 require_once("core/db.php");
 require_once("core/functions.php");
 
-$json = getLastUserFilesGithub();
-
-echo "<pre>";
-print_r($json);
-echo "</pre>";
-
 if (isset($_GET['gameid']) && isset($_GET['type'])) {
     if ($_GET['type']==1) {
         $path = SANDBOX_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
