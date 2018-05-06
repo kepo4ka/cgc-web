@@ -15,10 +15,22 @@ require_once("core/functions.php");
 switch ($_POST['type']) {
     case "createusersandboxgame":
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
+
+
+            if (GetUserSourceInfoOnlyCompiledANDUsed($_POST['user_id']))
+            {
+                echo "compiled";
+            }
+            else {
+               echo "noncompiled";
+            }
+            exit;
+
             if (count($_POST['users_array']) > 3) {
                 echo "Ошибка - Игроков не может быть больше 4";
                 exit;
             }
+
             $lastcreatedgameTime = SelectSandboxGameUserCreateTime($_SESSION['user_id']);
             if (isset($lastcreatedgameTime))
             {
