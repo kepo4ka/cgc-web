@@ -17,14 +17,12 @@ switch ($_POST['type']) {
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
 
 
-            if (GetUserSourceInfoOnlyCompiledANDUsed($_POST['user_id']))
+            if (!GetUserSourceInfoOnlyCompiledANDUsed($_POST['user_id']))
             {
-                echo "compiled";
+               echo "Ваша стратегия не подходит";
+                exit;
             }
-            else {
-               echo "noncompiled";
-            }
-            exit;
+
 
             if (count($_POST['users_array']) > 3) {
                 echo "Ошибка - Игроков не может быть больше 4";
