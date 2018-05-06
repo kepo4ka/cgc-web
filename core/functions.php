@@ -277,4 +277,23 @@ function file_force_download($file) {
     }
 }
 
+
+function getLastUserFilesGithub()
+{
+    $json = "";   
+    $context = stream_context_create(
+        array(
+            "http" => array(
+                "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+            )
+        )
+    );
+
+    $json = file_get_contents("https://api.github.com/repos/nosucgc/NOSUCGC/releases/latest", false, $context);
+
+    $json = json_decode($json);
+    return $json;
+}
+
+
 ?>
