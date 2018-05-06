@@ -289,9 +289,10 @@ function getLastUserFilesGithub()
         )
     );
 
-    $json = file_get_contents("https://api.github.com/repos/nosucgc/NOSUCGC/releases/latest", false, $context);
+    if ($json = file_get_contents("https://api.github.com/repos/nosucgc/NOSUCGC/releases/latest", false, $context)) {
 
-    $json = json_decode($json);
+        $json = json_decode($json);
+    }
     return $json;
 }
 
