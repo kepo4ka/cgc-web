@@ -75,6 +75,10 @@ footer {
 
 
 
+td {
+  padding: 2px;
+}
+
 
 .mui-panel {
   margin: 15px;
