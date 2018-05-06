@@ -17,6 +17,8 @@ if (!isset($user)) {
     header("Location: /unauth.php");
 }
 
+
+
 if (isset($_GET['gameid']) && isset($_GET['type'])) {
     if ($_GET['type']==1) {
         $path = SANDBOX_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
@@ -40,6 +42,8 @@ $sandboxgame_createblock = false;
 $time = time() + 3600;
 $lastuploadtime = SelectUserLastUploadTime($_SESSION['user_id']);
 $lastcreatedgameTime = SelectSandboxGameUserCreateTime($_SESSION['user_id']);
+$canCreate = GetUserSourceInfoOnlyCompiledANDUsed($_SESSION['user_id']);
+
 
 if (($time - $lastuploadtime) < UPLOAD_TIME_OUT) {
     $_SESSION['upload_block'] = true;
@@ -55,6 +59,10 @@ if (($time - $lastcreatedgameTime) < SANDBOX_CREATE_TIME_OUT) {
     $_SESSION['sandbox_create_block'] = true;
 } else {
     unset($_SESSION['sandbox_create_block']);
+}
+if (!$canCreate)
+{
+    $sandboxgame_createblock = true;
 }
 
 if (isset($_SESSION['sandbox_create_block']) && $_SESSION['sandbox_create_block'] == true) {
