@@ -1,16 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
-
-
-
 // header("Location: error.php");
 // exit;
 
@@ -24,18 +13,23 @@ require_once("core/functions.php");
 
 
 
-test();
-
- exit;
-
-
-
-if (isset($_GET['gameid'])) {
-    $path = RATING_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_DAT_FILE_NAME;
-    file_force_download($path);
-    unset($_GET['gameid']);
-    header("Location: /");
+if (isset($_GET['gameid']) && isset($_GET['type'])) {
+    if ($_GET['type']==1) {
+        $path = RATING_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
+        file_force_download($path);
+        unset($_GET['gameid']);
+        unset($_GET['type']);
+        header("Location: /");
+    }
+    if ($_GET['type']==2) {
+        $path = RATING_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMMANDS_UNITY;
+        file_force_download($path);
+        unset($_GET['gameid']);
+        unset($_GET['type']);
+        header("Location: /");
+    }
 }
+
 
 //$games_info = GetALLSandboxGames();
 
@@ -78,7 +72,6 @@ require_once("core/header.php");
                         <th><i class="fa fa-cogs"></i> Статус</th>
                         <th><i class="fa fa-users"></i> Участники</th>
                         <th><i class="fa fa-trophy"></i> Результат</th>
-                        <th><i class="fa fa-exclamation-circle"></i> Ошибки</th>
                         <th><i class="fa fa-eye"></i> Визуализация</th>
                     </tr>
                     </thead>
@@ -147,25 +140,17 @@ require_once("core/header.php");
                                 </td>
 
                                 <td>
-                                    <?php
-                                    if ($game['errors'] != "") {
-                                        ?>
-                                        <a class="pointer open_hide_info">Ошибки</a>
-                                        <div class="hidden_content">
-                                            <?= $game['errors'] ?>
-                                        </div>
-                                        <?php
-                                    } ?>
-                                </td>
-                                <td>
                                     <?php if ($game['status'] == 'ok') { ?>
-                                        <a href="?gameid=<?= $game['id'] ?>" dataid="<?= $game['id'] ?>"
+                                        <a href="?gameid=<?= $game['id'] ?>&type=1" dataid="<?= $game['id'] ?>"
                                            class="download_visualize_info_btn">
-                                            <button type="button" class="mui-btn mui-btn--small mui-btn--primary">
-                                                Скачать
+                                            <button type="button" class="mui-btn mui-btn--small mui-btn--primary">Отладчик
                                             </button>
                                         </a>
-
+                                        <a href="?gameid=<?= $game['id'] ?>&type=2" dataid="<?= $game['id'] ?>"
+                                           class="download_visualize_info_btn">
+                                            <button type="button" class="mui-btn mui-btn--small mui-btn--primary">Визуализатор
+                                            </button>
+                                        </a>
                                     <?php } ?>
                                 </td>
                             </tr>

@@ -64,7 +64,6 @@ require_once("core/header.php");
                     <th> <i class="fa fa-cogs"></i> Статус</th>
                     <th> <i class="fa fa-users"></i> Участники</th>
                     <th> <i class="fa fa-trophy"></i> Результат</th>
-                    <th> <i class="fa fa-exclamation-circle"></i> Ошибки</th>
                     <th> <i class="fa fa-eye"></i> Скачать данные</th>
                 </tr>
                 </thead>
@@ -135,18 +134,6 @@ require_once("core/header.php");
                                 }
                             }
                             ?>
-                        </td>
-
-                        <td>
-                            <?php
-                            if ($game['errors'] != "") {
-                                ?>
-                                <a class="pointer open_hide_info">Ошибки</a>
-                                <div class="hidden_content">
-                                    <?= $game['errors'] ?>
-                                </div>
-                                <?php
-                            } ?>
                         </td>
                         <td>
                             <?php if ($game['status'] == 'ok') { ?>

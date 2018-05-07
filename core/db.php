@@ -382,7 +382,7 @@ function GetSandboxGameInfoByCreator($user_id)
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox_game_session WHERE creator=? ORDER BY id DESC";
+    $sql = "SELECT * FROM sandbox WHERE creator=? ORDER BY id DESC";
 
     $result = array();
 
@@ -409,7 +409,7 @@ function GetSandboxGamesInfoByUserId($user_id)
 {
     global $link;
 
-    $sql = "SELECT sandbox_game_session.id, sandbox_game_session.users_group, sandbox_game_session.datetime, sandbox_game_session.status, sandbox_game_session.creator, sandbox_game_session.errors, sandbox_game_session.result  FROM sandbox_game_session, users_group WHERE users_group.user_id=? AND users_group.group_id=sandbox_game_session.users_group ORDER BY sandbox_game_session.id DESC";
+    $sql = "SELECT sandbox.id, sandbox.users_group, sandbox.datetime, sandbox.status, sandbox.creator, sandbox.errors, sandbox.result  FROM sandbox, users_group WHERE users_group.user_id=? AND users_group.group_id=sandbox.users_group ORDER BY sandbox.id DESC";
 
     $result = array();
 
@@ -439,7 +439,7 @@ function GetALLSandboxGames()
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox_game_session ORDER BY datetime DESC";
+    $sql = "SELECT * FROM sandbox ORDER BY datetime DESC";
 
     $result = array();
 
@@ -542,7 +542,7 @@ function SelectSandboxGameInfo($user_id)
 {
     global $link;
 
-    $sql = "SELECT datetime FROM sandbox_game_session WHERE creator= ? ORDER BY datetime DESC";
+    $sql = "SELECT datetime FROM sandbox WHERE creator= ? ORDER BY datetime DESC";
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
         /* bind parameters for markers */
@@ -569,7 +569,7 @@ function InsertGameINFOSandbox($group_id, $user_id)
 {
     global $link;
 
-    $sql = "INSERT INTO sandbox_game_session (datetime, users_group, status, creator) VALUES (?,?, 'wait', ?)";
+    $sql = "INSERT INTO sandbox (datetime, users_group, status, creator) VALUES (?,?, 'wait', ?)";
     $last_id = -1;
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
         $time = time() + 3600;
@@ -681,7 +681,7 @@ function SelectSandboxGameUserCreateTime($user_id)
     global $link;
 
 
-    $sql = "SELECT datetime FROM sandbox_game_session WHERE creator = ? ORDER BY datetime DESC";
+    $sql = "SELECT datetime FROM sandbox WHERE creator = ? ORDER BY datetime DESC";
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
@@ -737,7 +737,7 @@ function SelectSandboxGamesforDelete($creator)
     global $link;
     $games_id = array();
 
-    $sql = "SELECT id FROM sandbox_game_session WHERE creator = ? ORDER BY datetime";
+    $sql = "SELECT id FROM sandbox WHERE creator = ? ORDER BY datetime";
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
 
         /* bind parameters for markers */
@@ -766,7 +766,7 @@ function DeleteSandboxGame($game_id)
 {
     global $link;
 
-    $sql = "DELETE FROM sandbox_game_session WHERE id=?";
+    $sql = "DELETE FROM sandbox WHERE id=?";
     $group_id = 0;
 
     if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {

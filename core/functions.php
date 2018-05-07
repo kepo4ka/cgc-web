@@ -44,21 +44,6 @@ function logout($user_id)
 
 function CreateUserSandBoxGame($user_id, $users_array)
 {
-
-   // $time = SelectTimeFromSandboxGame($user_id);
-//    if ($time>0)
-//    {
-//        $now = $time + 3600;
-//
-//        if ( ($now - $time) < SANDBOX_CREATE_TIME_OUT)
-//        {
-//            echo "Ограничение на создание игр - " . SANDBOX_CREATE_TIME_OUT . " секунд";
-//            return;
-//        }
-//    }
-//    
-    
-    
     $good_users = array();
 
     foreach ($users_array as $user) {
@@ -101,42 +86,29 @@ function CreateUserSandBoxGame($user_id, $users_array)
         return;
     }
 
-    GameSandboxFilesProccess($good_users_info, $last_id);
+    GameFilesProccess($good_users_info, $last_id, SANDBOX_GAMES_PATH);
     
     echo "good " . $last_id;
 }
 
 
-
-function test()
+function CreateAllRatingGames()
 {
+    $users_id_array = array();
 
-   // $time = SelectTimeFromSandboxGame($user_id);
-//    if ($time>0)
-//    {
-//        $now = $time + 3600;
-//
-//        if ( ($now - $time) < SANDBOX_CREATE_TIME_OUT)
-//        {
-//            echo "Ограничение на создание игр - " . SANDBOX_CREATE_TIME_OUT . " секунд";
-//            return;
-//        }
-//    }
-//    
-   
-
-    $good_users_info = GetALLCompiledUsers();  
+    $good_users_info = GetALLCompiledUsers();
     $good_bots_info = GetALLCompiledBots();
-   
 
 
-
-  
-    $diff = 4- count($good_users_info)%4;
-
-    $i=0;
-    while($i<$diff)
+    if (count($good_users_info) < 1)
     {
+        echo "нет подходящих пользователей для создания рейтинговых игр";
+        return;
+    }
+
+    $diff = 4 - count($good_users_info) % 4;
+    $i = 0;
+    while ($i < $diff) {
         $good_users_info[] = $good_bots_info[$i];
         $i++;
     }
@@ -147,45 +119,57 @@ function test()
 //     echo "</pre>";
 //     echo "<br>";
 
-shuffle($good_users_info);
+    shuffle($good_users_info);
+
+    foreach ($good_users_info as $user_info) {
+        $users_id_array[] = $user_info['id'];
+    }
+
+    while (count($users_id_array) > 0) {
+        CreateOneRatingGame(array_splice($users_id_array, 0, 4));
+    }
 
 
+//    for ($i = 0; $i < count($good_users_info); $i = $i + 4) {
+//        CreateOneRatingGame(array_splice($good_users_info, $i, $i + 4));
+//    }
 
-
-  
-  
 }
 
 
-
-
-
-
-function CreateRatingGame($group)
+function CreateOneRatingGame($users_id_array)
 {
-    $last_id = InsertGameINFORating($group);
-    if ($last_id < 0) {
-        echo "InsertGameINFORating last_id seterror";
+
+    if (!$group_id = InsertUserGroup($users_id_array)) {
+
+        echo "Не удалось создать группу пользователей";
         return;
     }
 
- //   GameRatingFilesProccess($good_users_info, $last_id);
+    $last_id = InsertGameINFORating($group_id);
+    echo "last_id " . $last_id . " ";
+    if ($last_id < 0) {
+        echo "InsertGameINFOSandbox last_id seterror";
+        return;
+    }
 
-    echo "good " . $last_id;
+    $good_users_info = array();
+
+    foreach ($users_id_array as $user) {
+        if ($info = GetUserSourceInfoOnlyCompiledANDUsed($user)) {
+            $good_users_info[] = $info;
+        }
+    }
+
+    if (GameFilesProccess($good_users_info, $last_id, RATING_GAMES_PATH)) {
+        echo "good " . $last_id;
+    }
 }
 
 
-
-
-
-
-
-
-
-function GameSandboxFilesProccess($good_users_info, $last_id)
+function GameFilesProccess($good_users_info, $last_id, $dir_path)
 {
-    $game_dir = SANDBOX_GAMES_PATH . "/" . $last_id;
-
+    $game_dir = $dir_path . "/" . $last_id;
     if (!is_dir($game_dir)) {
         mkdir($game_dir);
     }
