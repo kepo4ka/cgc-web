@@ -12,17 +12,16 @@ require_once("core/db.php");
 require_once("core/functions.php");
 
 
-
 if (isset($_GET['gameid']) && isset($_GET['type'])) {
     if ($_GET['type']==1) {
-        $path = RATING_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
+        $path = FINAL_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMPRESSED_JSON_FILE_NAME;
         file_force_download($path);
         unset($_GET['gameid']);
         unset($_GET['type']);
         header("Location: /");
     }
     if ($_GET['type']==2) {
-        $path = RATING_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMMANDS_UNITY;
+        $path = FINAL_GAMES_PATH . "/" . $_GET['gameid'] . "/" . GAMESTATES_COMMANDS_UNITY;
         file_force_download($path);
         unset($_GET['gameid']);
         unset($_GET['type']);
@@ -33,7 +32,7 @@ if (isset($_GET['gameid']) && isset($_GET['type'])) {
 
 //$games_info = GetALLSandboxGames();
 
-$games_info = GetGames(RATING_GAMES_PATH);
+$games_info = GetGames(FINAL_GAMES_PATH);
 ?>
 
 
@@ -58,7 +57,7 @@ require_once("core/header.php");
                 </button>
             </a>
 
-            <div class="mui--text-display1">Рейтинговые игры</div>
+            <div class="mui--text-display1">ФИНАЛ</div>
             <div class="mui-container-fluid">
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>

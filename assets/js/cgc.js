@@ -47,10 +47,63 @@ $(document).ready(function () {
     });
 
 
-    $("ul.mui-tabs__bar li").on("click", function () {
+    $("ul.profile_main_ul li").on("click", function () {
         AjaxSendProfileTab($(this).attr("data-id"));
     });
 
+    
+    $(".create_rating_games_wave_btn").on("click", function () {
+        AjaxCreateRatingGamesWave();
+    });
+
+    $(".create_final_games_wave_btn").on("click", function () {
+        AjaxCreateFinalGamesWave();
+    });
+
+
+    function AjaxCreateFinalGamesWave() {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "createfinalgameswave"
+            },
+            success: function (response) {
+                console.log(response + " response");
+
+                response = response.trim();
+                if (response == "good") {
+                    NotifyMessage("Волна финальных игр создана");
+                }
+                else {
+                    NotifyERRORMessage(response);
+                }
+            }
+        });
+    }
+
+    function AjaxCreateRatingGamesWave() {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "createratinggameswave"               
+            },
+            success: function (response) {
+                console.log(response);
+
+                response = response.trim();
+                if (response == "good") {
+                    NotifyMessage("Волна рейтинговых игр создана");
+                }
+                else {
+                    NotifyERRORMessage(response);
+                }
+            }
+        });
+    }
 
     function AjaxSendProfileTab(tab_id) {
         $.ajax({

@@ -23,11 +23,7 @@ if (isset($_GET['gameid']) && isset($_GET['type'])) {
     }
 }
 
-
-
-
-
-$games_info = GetALLSandboxGames();
+$games_info = GetGames(SANDBOX_GAMES_PATH);
 ?>
 
 

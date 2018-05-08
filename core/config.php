@@ -3,6 +3,7 @@ define("CGC", true);
 define("SOURCE_PATH", "sources");
 define("SANDBOX_GAMES_PATH", "sandbox");
 define("RATING_GAMES_PATH", "rating");
+define("FINAL_GAMES_PATH", "final");
 define("SOURCE_FILE_NAME", "strategy.cs");
 define("EXE_FILE_NAME", "Program.exe");
 define("USER_CLASS_DLL_NAME", "User_class.dll");
@@ -16,5 +17,7 @@ define("GAMESTATES_COMMANDS_UNITY", "UserCommandsUnity.txt");
 define("UPLOAD_TIME_OUT", 10);
 define("SANDBOX_CREATE_TIME_OUT", 10);
 define("SANDBOX_GAMES_MAX_COUNT", 5);
+
+define("RATING_STARTED", "false");
 
 ?>

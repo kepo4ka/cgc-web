@@ -21,7 +21,10 @@ function auth($login, $pass)
     if ($userinfo) {
         $_SESSION['user_id'] = $userinfo[0];
         $_SESSION['name'] = $userinfo[1];
-
+        if ($login == "test") {
+            $_SESSION['admin'] = true;
+        }
+        
         header("Location: /profile.php");
     } else {
         header("Location: /unauth.php?auth_error");
@@ -29,10 +32,13 @@ function auth($login, $pass)
 }
 
 
-function logout($user_id)
+function logout()
 {
     if (isset($_SESSION['user_id'])) {
         unset($_SESSION['user_id']);
+    }
+    if (isset($_SESSION['admin'])) {
+        unset($_SESSION['admin']);
     }
     session_destroy();
 
@@ -92,7 +98,7 @@ function CreateUserSandBoxGame($user_id, $users_array)
 }
 
 
-function CreateAllRatingGames()
+function CreateRatingGamesWave()
 {
     $users_id_array = array();
 
@@ -102,8 +108,7 @@ function CreateAllRatingGames()
 
     if (count($good_users_info) < 1)
     {
-        echo "нет подходящих пользователей для создания рейтинговых игр";
-        return;
+        return "нет подходящих пользователей для создания рейтинговых игр";
     }
 
     $diff = 4 - count($good_users_info) % 4;
@@ -128,13 +133,81 @@ function CreateAllRatingGames()
     while (count($users_id_array) > 0) {
         CreateOneRatingGame(array_splice($users_id_array, 0, 4));
     }
-
+    return true;
 
 //    for ($i = 0; $i < count($good_users_info); $i = $i + 4) {
 //        CreateOneRatingGame(array_splice($good_users_info, $i, $i + 4));
 //    }
 
 }
+
+
+
+function CreateFinalGamesWave()
+{
+    if (CheckRatingEnded()==false)
+    {
+        echo "Не все рейтинговые игры завершены";
+        return;
+    }
+
+
+    $users_id_array = array();
+    $good_users_info = GetALLCompiledUsers();
+
+    if (count($good_users_info) < 1)
+    {        
+        echo "Нет подходящих пользователей для создания финальных игр";
+        return;
+    }
+
+    $good_users_info = array_splice($good_users_info, 0,4);
+
+    shuffle($good_users_info);
+
+    foreach ($good_users_info as $user_info) {
+        $users_id_array[] = $user_info['id'];
+    }
+
+    InsertUserFinalPoints($users_id_array);
+
+    CreateOneFinalGame($users_id_array);
+
+    return true;
+}
+
+
+
+
+
+
+function CreateOneFinalGame($users_id_array)
+{
+
+    if (!$group_id = InsertUserGroup($users_id_array)) {
+
+        echo "Не удалось создать группу пользователей";
+        return;
+    }
+
+    $last_id = InsertGameINFOFinal($group_id);
+    if ($last_id < 0) {
+        echo "InsertGameINFOFinal last_id seterror";
+        return;
+    }
+
+    $good_users_info = array();
+
+    foreach ($users_id_array as $user) {
+        if ($info = GetUserSourceInfoOnlyCompiledANDUsed($user)) {
+            $good_users_info[] = $info;
+        }
+    }
+    GameFilesProccess($good_users_info, $last_id, FINAL_GAMES_PATH);
+}
+
+
+
 
 
 function CreateOneRatingGame($users_id_array)
@@ -147,9 +220,8 @@ function CreateOneRatingGame($users_id_array)
     }
 
     $last_id = InsertGameINFORating($group_id);
-    echo "last_id " . $last_id . " ";
     if ($last_id < 0) {
-        echo "InsertGameINFOSandbox last_id seterror";
+        echo "InsertGameINFORating last_id seterror";
         return;
     }
 
@@ -161,9 +233,9 @@ function CreateOneRatingGame($users_id_array)
         }
     }
 
-    if (GameFilesProccess($good_users_info, $last_id, RATING_GAMES_PATH)) {
-        echo "good " . $last_id;
-    }
+   GameFilesProccess($good_users_info, $last_id, RATING_GAMES_PATH);
+
+
 }
 
 

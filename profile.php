@@ -3,7 +3,7 @@ require_once("core/config.php");
 
 session_start();
 
-$_SESSION['JOPA'] = "mercyme";
+$_SESSION['some_key'] = "mercyme";
 
 require_once("core/db.php");
 require_once("core/functions.php");
@@ -68,6 +68,14 @@ if (!$canCreate)
 if (isset($_SESSION['sandbox_create_block']) && $_SESSION['sandbox_create_block'] == true) {
     $sandboxgame_createblock = true;
 }
+
+
+if (RATING_STARTED ==true)
+{
+    $uploadblock =true;
+    $sandboxgame_createblock = true;
+}
+
 
 $tab1 = "";
 $tab2 = "";
@@ -148,7 +156,7 @@ require_once("core/header.php");
     <div class="mui-container-fluid">
 
 
-        <ul class="mui-tabs__bar flex_ul">
+        <ul class="mui-tabs__bar profile_main_ul flex_ul">
             <li class="<?= $tab1 ?>" data-id="1"><a class="pointer" data-mui-toggle="tab"
                                                     data-mui-controls="pane-default-1">
                     <i class="fa fa-user"></i>

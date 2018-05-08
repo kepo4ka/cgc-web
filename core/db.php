@@ -66,6 +66,53 @@ function getUsers()
 }
 
 
+function checkFinalUser($user_id)
+{
+    global $link;
+    $sql = "SELECT user_id FROM final_points WHERE user_id=?";
+    $users_array = array();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $user_id);
+
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            return true;
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return false;
+}
+
+
+
+function InsertUserFinalPoints($users)
+{
+    global $link;
+    foreach ($users as $user)
+    {
+        if (checkFinalUser($user))
+        {
+            continue;
+        }
+
+        $sql = "INSERT INTO final_points (user_id, points) VALUES (?,  0)";
+
+        if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+            $stmt->bind_param("i", $user);
+            $stmt->execute();      
+            $stmt->free_result();
+            $stmt->close();           
+        }
+    }
+}
+
+
+
 function getOnlyUsers()
 {
     global $link;
@@ -93,6 +140,39 @@ function getOnlyUsers()
         return $users_array;
     }
 }
+
+
+function getFinalUsers()
+{
+    global $link;
+    $sql = "SELECT users.id, final_points.points, users.name FROM users, final_points  WHERE users.id=final_points.user_id ORDER BY final_points.points DESC";
+    $users_array = array();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        /* bind parameters for markers */
+        // mysqli_stmt_bind_param($stmt, "i", "1");
+
+        /* execute query */
+        $stmt->execute();
+
+        /* bind result variables */
+        $res = $stmt->get_result();
+
+        /* fetch value */
+        while ($row = $res->fetch_assoc()) {
+            $users_array[] = $row;
+        }
+
+        /* close statement */
+        mysqli_stmt_close($stmt);
+        return $users_array;
+    }
+}
+
+
+
+
 
 function GetALLCompiledBots()
 {
@@ -432,14 +512,31 @@ function GetSandboxGamesInfoByUserId($user_id)
 }
 
 
-
-
-
-function GetALLSandboxGames()
+function CheckRatingEnded()
 {
     global $link;
 
-    $sql = "SELECT * FROM sandbox ORDER BY datetime DESC";
+    $sql = "SELECT id FROM rating WHERE status='wait'";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            return false;
+        }
+
+        mysqli_stmt_close($stmt);
+    }
+    return true;
+}
+
+
+function GetGames($type)
+{
+    global $link;
+
+    $sql = "SELECT * FROM " . $type . " ORDER BY datetime DESC";
 
     $result = array();
 
@@ -450,36 +547,15 @@ function GetALLSandboxGames()
         while ($row = $res->fetch_assoc()) {
 
             $row['users'] = GetUsersInGroup($row['users_group']);
-            $row['creator_name'] = getUser($row['creator']);
+            if ($type == SANDBOX_GAMES_PATH) {
+                $row['creator_name'] = getUser($row['creator']);
+            }
             $result[] = $row;
         }
         mysqli_stmt_close($stmt);
     }
     return $result;
 }
-
-function GetALLRaingGames()
-{
-    global $link;
-
-    $sql = "SELECT * FROM rating";
-
-    $result = array();
-
-    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
-        $stmt->execute();
-        $res = $stmt->get_result();
-
-        while ($row = $res->fetch_assoc()) {
-
-            $row['users'] = GetUsersInGroup($row['users_group']);
-            $result[] = $row;
-        }
-        mysqli_stmt_close($stmt);
-    }
-    return $result;
-}
-
 
 
 
@@ -611,6 +687,30 @@ function InsertGameINFORating($group_id)
     }
     return $last_id;
 }
+
+
+function InsertGameINFOFinal($group_id)
+{
+    global $link;
+
+    $sql = "INSERT INTO final (datetime, users_group, status) VALUES (?,?, 'wait')";
+    $last_id = -1;
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $time = time() + 3600;
+        $stmt->bind_param("ii", $time, $group_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $last_id = $stmt->insert_id;
+
+        if ($stmt->affected_rows < 1) {
+            return false;
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+    return $last_id;
+}
+
 
 
 function InsertUserGroup($users_array)

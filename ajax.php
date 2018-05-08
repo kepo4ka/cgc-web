@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['JOPA']) || !isset($_POST['type'])) {
+if (!isset($_SESSION['some_key']) || !isset($_POST['type'])) {
     header("Location: /error.php");
 }
 
-if ($_SESSION['JOPA'] != "mercyme") {
+if ($_SESSION['some_key'] != "mercyme") {
     header("Location: /error.php");
 }
 
@@ -15,8 +15,6 @@ require_once("core/functions.php");
 switch ($_POST['type']) {
     case "createusersandboxgame":
         if (isset($_POST['user_id']) && isset($_POST['users_array'])) {
-
-
             if (!GetUserSourceInfoOnlyCompiledANDUsed($_POST['user_id']))
             {
                echo "Ваша стратегия не подходит";
@@ -49,6 +47,11 @@ switch ($_POST['type']) {
 
     case "updateselectedsource":
 
+        if (RATING_STARTED == true)
+        {
+            echo "Рейтинг начался, поэтому поменять стратегию нельзя";
+            return;
+        }
         if (isset($_POST['source_id']) && isset($_POST['user_id'])) {
 
             $res = UpdateUnselectAnotherSources($_POST['user_id'], $_POST['source_id']);
@@ -64,6 +67,33 @@ switch ($_POST['type']) {
     case "setprofiletab";
         $_SESSION['tab_id'] = $_POST['tab_id'];
         return;
+
+    case "createratinggameswave":
+        if (!isset($_SESSION['admin']) || $_SESSION['admin']==false)
+        {
+            return;
+        }
+        $result = CreateRatingGamesWave();
+        if ($result === true)
+            echo "good";
+        else {
+            echo $result;
+        }
+        return;
+
+    case "createfinalgameswave":
+        if (!isset($_SESSION['admin']) || $_SESSION['admin']==false)
+        {
+            return;
+        }
+        $result = CreateFinalGamesWave();
+        if ($result === true) {
+            echo "good";
+        } else {
+            echo $result;
+        }
+        return;
+
 }
 
 
