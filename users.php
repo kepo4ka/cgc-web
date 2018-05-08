@@ -38,7 +38,7 @@ require_once("core/header.php");
             </li>
             <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"
                                             data-mui-controls="pane-default-2">
-                    <i class="fa fa-plus-circle"></i>
+                    <i class="fa fa-trophy"></i>
                     Финал</a>
             </li>
 
