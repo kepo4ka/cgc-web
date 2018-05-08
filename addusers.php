@@ -5,7 +5,7 @@
  * Date: 04.05.2018
  * Time: 9:07
  */
-if (!isset($_GET['JOPA']) || $_GET['JOPA'] != "mercyme")
+if (!isset($_GET['some_key']) || $_GET['some_key'] != "mercyme")
 {
     exit;
 }
