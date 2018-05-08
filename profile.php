@@ -70,11 +70,7 @@ if (isset($_SESSION['sandbox_create_block']) && $_SESSION['sandbox_create_block'
 }
 
 
-if (RATING_STARTED ==true)
-{
-    $uploadblock =true;
-    $sandboxgame_createblock = true;
-}
+
 
 
 $tab1 = "";
