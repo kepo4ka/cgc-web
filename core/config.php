@@ -18,6 +18,6 @@ define("UPLOAD_TIME_OUT", 10);
 define("SANDBOX_CREATE_TIME_OUT", 10);
 define("SANDBOX_GAMES_MAX_COUNT", 5);
 
-define("RATING_STARTED", "false");
+define("RATING_STARTED", false);
 
 ?>
