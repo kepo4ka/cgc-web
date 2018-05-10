@@ -40,7 +40,7 @@ require_once("core/header.php");
 
 <div id="content-wrapper" class=" mui-container-fluid">
 
-    <div class="mui-container-fluid mui-panel">
+    <div class="mui-container-fluid mui-panel grid">
 
         <button type="button" class="mui-btn mui-btn--raised create_rating_games_wave_btn">Создать одну волну рейтинговых игр
         </button>
@@ -48,6 +48,12 @@ require_once("core/header.php");
         <button type="button" class="mui-btn mui-btn--raised create_final_games_wave_btn">Создать все игры финала
         </button>
 
+        <button type="button" class="mui-btn mui-btn--raised delete_old_ver_exe_files_btn">Удалить старые версии скомпилированных файлов
+        </button>
+        <button type="button" class="mui-btn mui-btn--raised delete_rating_btn">Удалить рейтинг
+        </button>
+        <button type="button" class="mui-btn mui-btn--raised delete_final_btn">Удалить финал
+        </button>
     </div>
 
 </div>

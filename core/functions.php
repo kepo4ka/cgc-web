@@ -299,11 +299,69 @@ function removeDirectory($path) {
     foreach ($files as $file) {
         is_dir($file) ? removeDirectory($file) : unlink($file);
     }
-    rmdir($path);
+
+    @rmdir($path);
     return;
 }
 
 
+function removeOldVerCompiledFiles($path)
+{
+    $files = glob($path . '/*');
+    foreach ($files as $file) {
+
+        $split = explode("/", $file);
+        $count = count($split);
+
+        if ($count > 0) {
+            $tempfile = $split[$count - 1];
+        } else {
+            $tempfile = $file;
+        }
+        if ($tempfile == ".htaccess" || $tempfile == SOURCE_FILE_NAME) {
+            continue;
+        }
+
+        is_dir($file) ? removeOldVerCompiledFiles($file) : unlink($file);
+    }
+}
+
+
+function removeOldVerSources()
+{
+    if (UpdateDeleteOldCompiledSourcesInfo()) {
+        removeOldVerCompiledFiles(SOURCE_PATH);
+        return true;
+    }
+    return false;
+}
+
+
+function removeRating()
+{
+    ClearTable(RATING_GAMES_PATH);
+    UpdateRestoreUserRatingPoints();
+    removeDirectory(RATING_GAMES_PATH);
+    return true;
+}
+
+
+function removeFinal()
+{
+    ClearTable(FINAL_GAMES_PATH);
+    ClearTable(FINAL_POINTS_TABLE_NAME);
+    removeDirectory(FINAL_GAMES_PATH);
+    return true;
+}
+
+
+function isAdminInSession()
+{
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
+        return false;
+    }
+    return true;
+}
 
 
 function file_force_download($file) {

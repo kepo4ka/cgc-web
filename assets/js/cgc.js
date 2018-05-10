@@ -60,6 +60,87 @@ $(document).ready(function () {
         AjaxCreateFinalGamesWave();
     });
 
+    $(".delete_old_ver_exe_files_btn").on("click", function () {
+        AjaxDeleteOldVerCompiledSources();
+    });
+
+    $(".delete_rating_btn").on("click", function () {
+        AjaxDeleteRating();
+    });
+
+    $(".delete_final_btn").on("click", function () {
+        AjaxDeleteFinal();
+    });
+
+
+
+    function AjaxDeleteRating() {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "deleterating"
+            },
+            success: function (response) {
+                console.log(response + " response");
+
+                response = response.trim();
+                if (response == "good") {
+                    NotifyMessage("Вся информация о рейтинговых играх удалена");
+                }
+                else {
+                    NotifyERRORMessage(response);
+                }
+            }
+        });
+    }
+
+    function AjaxDeleteFinal() {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "deletefinal"
+            },
+            success: function (response) {
+                console.log(response + " response");
+
+                response = response.trim();
+                if (response == "good") {
+                    NotifyMessage("Вся информация о финале удалена");
+                }
+                else {
+                    NotifyERRORMessage("error: " + response);
+                }
+            }
+        });
+    }
+
+
+
+    function AjaxDeleteOldVerCompiledSources() {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            // dataType: 'json',
+            data: {
+                "type": "deleteoldvercompiledfiles"
+            },
+            success: function (response) {
+                console.log(response + " response");
+
+                response = response.trim();
+                if (response == "good") {
+                    NotifyMessage("Старые версии удалены");
+                }
+                else {
+                    NotifyERRORMessage(response);
+                }
+            }
+        });
+    }
 
     function AjaxCreateFinalGamesWave() {
         $.ajax({

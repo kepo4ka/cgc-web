@@ -41,7 +41,7 @@ switch ($_POST['type']) {
 
             CreateUserSandBoxGame($_POST['user_id'], $_POST['users_array']);
             $_SESSION['sandbox_create_time'] = time();
-            DeleteSandboxGameInfo($_POST['user_id']);
+        //    DeleteSandboxGameInfo($_POST['user_id']);
         }
         return;
 
@@ -69,7 +69,7 @@ switch ($_POST['type']) {
         return;
 
     case "createratinggameswave":
-        if (!isset($_SESSION['admin']) || $_SESSION['admin']==false)
+        if (!isAdminInSession())
         {
             return;
         }
@@ -82,7 +82,7 @@ switch ($_POST['type']) {
         return;
 
     case "createfinalgameswave":
-        if (!isset($_SESSION['admin']) || $_SESSION['admin']==false)
+        if (!isAdminInSession())
         {
             return;
         }
@@ -93,7 +93,43 @@ switch ($_POST['type']) {
             echo $result;
         }
         return;
-
+    case "deleteoldvercompiledfiles":
+        if (!isAdminInSession())
+        {
+            return;
+        }
+    $result = removeOldVerSources();
+        if ($result === true) {
+            echo "good";
+        } else {
+            echo $result;
+        }
+        return;
+    
+    case "deleterating":
+        if (!isAdminInSession())
+        {
+            return;
+        }
+        $result = removeRating();
+        if ($result === true) {
+            echo "good";
+        } else {
+            echo $result;
+        }
+        return;
+    case "deletefinal":
+        if (!isAdminInSession())
+        {
+            return;
+        }
+        $result = removeFinal();
+        if ($result === true) {
+            echo "good";
+        } else {
+            echo $result;
+        }
+        return;
 }
 
 

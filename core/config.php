@@ -4,6 +4,7 @@ define("SOURCE_PATH", "sources");
 define("SANDBOX_GAMES_PATH", "sandbox");
 define("RATING_GAMES_PATH", "rating");
 define("FINAL_GAMES_PATH", "final");
+define("FINAL_POINTS_TABLE_NAME", "final_points");
 define("SOURCE_FILE_NAME", "strategy.cs");
 define("EXE_FILE_NAME", "Program.exe");
 define("USER_CLASS_DLL_NAME", "User_class.dll");

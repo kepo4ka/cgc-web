@@ -80,6 +80,12 @@ td {
 }
 
 
+
+.grid {
+  display: grid;
+}
+
+
 .mui-panel {
   margin: 15px;
 }

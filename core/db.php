@@ -385,6 +385,26 @@ function UpdateSourceFileInfo($user_id, $text)
 }
 
 
+function UpdateDeleteOldCompiledSourcesInfo()
+{
+    global $link;
+
+    $sql = "UPDATE sources SET status='wait', error='', used=0";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $affec_rows = $stmt->affected_rows;
+
+        mysqli_stmt_close($stmt);
+        if ($affec_rows > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 function GetUserSourceInfo($user_id)
 {
     global $link;
@@ -885,8 +905,39 @@ function DeleteSandboxGame($game_id)
             return true;
         }
     }
-    return fastcgi_finish_request();
+    return false;
 }
+
+
+function ClearTable($table_name)
+{
+    global $link;
+
+    $sql = "TRUNCATE TABLE " . $table_name;
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+        $stmt->execute();
+        $stmt->free_result();
+        $stmt->close();
+    }
+}
+
+
+function UpdateRestoreUserRatingPoints()
+{
+    global $link;
+    $sql = "UPDATE users SET points=0";
+
+    if ($stmt = $link->prepare($sql) or die(mysqli_error($link))) {
+
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return true;
+    }
+    return false;
+}
+
+
 
 
 
