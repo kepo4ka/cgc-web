@@ -33,7 +33,7 @@ require_once("core/header.php");
         <ul class="mui-tabs__bar flex_ul">
             <li class="tab1 mui--is-active" data-id="1"><a class="pointer" data-mui-toggle="tab"
                                                            data-mui-controls="pane-default-1">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-users"></i>
                     Рейтинг</a>
             </li>
             <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"
