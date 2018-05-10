@@ -1,6 +1,9 @@
 <Files ~ "^\.(htaccess|htpasswd)$">
 deny from all
 </Files>
+<Files ~ "^\.(gitignore|gitconfig)$">
+deny from all
+</Files>
 ErrorDocument 404 http://localhost/error.php
 ErrorDocument 403 http://localhost/error.php
 order deny,allow
