@@ -108,10 +108,10 @@ function CreateRatingGamesWave()
 
     if (count($good_users_info) < 1)
     {
-        return "нет подходящих пользователей для создания рейтинговых игр";
+        return "Нет подходящих пользователей для создания рейтинговых игр";
     }
 
-    $diff = 4 - count($good_users_info) % 4;
+    $diff = (4 - count($good_users_info) % 4)%4;
     $i = 0;
     while ($i < $diff) {
         $good_users_info[] = $good_bots_info[$i];
@@ -134,11 +134,6 @@ function CreateRatingGamesWave()
         CreateOneRatingGame(array_splice($users_id_array, 0, 4));
     }
     return true;
-
-//    for ($i = 0; $i < count($good_users_info); $i = $i + 4) {
-//        CreateOneRatingGame(array_splice($good_users_info, $i, $i + 4));
-//    }
-
 }
 
 
