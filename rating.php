@@ -53,8 +53,8 @@ require_once("core/header.php");
 <div id="content-wrapper" class=" mui-container-fluid">
     <div class="mui-container-fluid mui-panel">
         <div class="mui-container-fluid ">
-            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="right">
-                <button type="button" class="mui-btn mui-btn--raised">Обновить
+            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="right update_btn">
+                <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                 </button>
             </a>
 
