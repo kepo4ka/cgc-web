@@ -68,20 +68,16 @@ require_once("core/header.php");
                     <i class="fa fa-users"></i>
                     Рейтинговые игры</a>
             </li>
-            <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"
-                                            data-mui-controls="pane-default-2">
-                    <i class="fa fa-trophy"></i>
-                    Финальные игры</a>
-            </li>
+<!--            <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"-->
+<!--                                            data-mui-controls="pane-default-2">-->
+<!--                    <i class="fa fa-trophy"></i>-->
+<!--                    Финальные игры</a>-->
+<!--            </li>-->
 
         </ul>
 
 
         <div class="mui-tabs__pane mui-panel mui--is-active" id="pane-default-1">
-            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="update_btn">
-                <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
-                </button>
-            </a>
             <div class="mui-container-fluid">
             <table class="mui-table mui-table--bordered table_center users_info_table">
                 <thead>
@@ -186,115 +182,112 @@ require_once("core/header.php");
         </div>
 
 
-        <div class="mui-tabs__pane mui-panel" id="pane-default-2">
-            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="update_btn">
-                <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
-                </button>
-            </a>
-            <div class="mui-container-fluid">
-            <table class="mui-table mui-table--bordered table_center users_info_table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>ID</th>
-                    <th><i class="fa fa-clock-o"></i> Дата начала</th>
-                    <th><i class="fa fa-cogs"></i> Статус</th>
-                    <th><i class="fa fa-users"></i> Участники</th>
-                    <th><i class="fa fa-trophy"></i> Результат</th>
-                    <th><i class="fa fa-eye"></i> Визуализация</th>
-                </tr>
-                </thead>
+<!--        <div class="mui-tabs__pane mui-panel" id="pane-default-2">-->
 
-                <tbody>
-                <?php
-                $i = 1;
-                if (isset($final_games_info)) {
-                    foreach ($final_games_info as $game) {
-
-                        $game['result'] = json_decode($game['result'], true);
-
-                        ?>
-                        <tr>
-                            <td>
-                                <?= $i ?>
-                            </td>
-                            <td class="user_id">
-                                <?= $game['id'] ?>
-                            </td>
-
-                            <td>
-
-                                <?= date("d/m/Y H:i:s", $game['datetime']) ?>
-
-                            </td>
-                            <td class="bold">
-                                <span
-                                <?php
-                                if ($game['status'] == 'ok') {
-                                    echo " class='text_green'>";
-                                    echo "Проверено";
-
-                                } elseif ($game['status'] == 'error') {
-                                    echo " class='text_red'>";
-                                    echo "Ошибка во время проверки";
-                                } elseif ($game['status'] == 'work') {
-                                    echo " class='text_blue'>";
-                                    echo "Выполняется";
-                                } else {
-                                    echo ">";
-                                    echo "В очереди";
-                                }
-                                ?>
-                                </span>
-                            </td>
-                            <td>
-                                <?php
-
-                                foreach ($game['users'] as $game_user) { ?>
-
-                                    <?= $game_user['name'] ?>
-                                    <br>
-                                    <?php
-                                } ?>
-                            </td>
-                            <td>
-
-                                <?php
-                                if ($game['result'] != "") {
-                                    foreach ($game['result'] as $result) {
-                                        echo $result['Name'] . " - " . $result['Points'] . "<br>";
-                                    }
-                                }
-                                ?>
-                            </td>
-
-                            <td>
-                                <?php if ($game['status'] == 'ok') { ?>
-                                    <a href="?gameid=<?= $game['id'] ?>&type=1&game_type=2"
-                                       dataid="<?= $game['id'] ?>"
-                                       class="download_visualize_info_btn">
-                                        <button type="button" class="mui-btn mui-btn--small mui-btn--primary">
-                                            Отладчик
-                                        </button>
-                                    </a>
-                                    <a href="?gameid=<?= $game['id'] ?>&type=2&game_type=2"
-                                       dataid="<?= $game['id'] ?>"
-                                       class="download_visualize_info_btn">
-                                        <button type="button" class="mui-btn mui-btn--small mui-btn--primary">
-                                            Визуализатор
-                                        </button>
-                                    </a>
-                                <?php } ?>
-                            </td>
-                        </tr>
-                        <?php
-                        $i++;
-                    }
-                } ?>
-                </tbody>
-            </table>
-            </div>
-        </div>
+<!--            <div class="mui-container-fluid">-->
+<!--            <table class="mui-table mui-table--bordered table_center users_info_table">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>#</th>-->
+<!--                    <th>ID</th>-->
+<!--                    <th><i class="fa fa-clock-o"></i> Дата начала</th>-->
+<!--                    <th><i class="fa fa-cogs"></i> Статус</th>-->
+<!--                    <th><i class="fa fa-users"></i> Участники</th>-->
+<!--                    <th><i class="fa fa-trophy"></i> Результат</th>-->
+<!--                    <th><i class="fa fa-eye"></i> Визуализация</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!---->
+<!--                <tbody>-->
+<!--                --><?php
+//                $i = 1;
+//                if (isset($final_games_info)) {
+//                    foreach ($final_games_info as $game) {
+//
+//                        $game['result'] = json_decode($game['result'], true);
+//
+//                        ?>
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                --><?//= $i ?>
+<!--                            </td>-->
+<!--                            <td class="user_id">-->
+<!--                                --><?//= $game['id'] ?>
+<!--                            </td>-->
+<!---->
+<!--                            <td>-->
+<!---->
+<!--                                --><?//= date("d/m/Y H:i:s", $game['datetime']) ?>
+<!---->
+<!--                            </td>-->
+<!--                            <td class="bold">-->
+<!--                                <span-->
+<!--                                --><?php
+//                                if ($game['status'] == 'ok') {
+//                                    echo " class='text_green'>";
+//                                    echo "Проверено";
+//
+//                                } elseif ($game['status'] == 'error') {
+//                                    echo " class='text_red'>";
+//                                    echo "Ошибка во время проверки";
+//                                } elseif ($game['status'] == 'work') {
+//                                    echo " class='text_blue'>";
+//                                    echo "Выполняется";
+//                                } else {
+//                                    echo ">";
+//                                    echo "В очереди";
+//                                }
+//                                ?>
+<!--                                </span>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                --><?php
+//
+//                                foreach ($game['users'] as $game_user) { ?>
+<!---->
+<!--                                    --><?//= $game_user['name'] ?>
+<!--                                    <br>-->
+<!--                                    --><?php
+//                                } ?>
+<!--                            </td>-->
+<!--                            <td>-->
+<!---->
+<!--                                --><?php
+//                                if ($game['result'] != "") {
+//                                    foreach ($game['result'] as $result) {
+//                                        echo $result['Name'] . " - " . $result['Points'] . "<br>";
+//                                    }
+//                                }
+//                                ?>
+<!--                            </td>-->
+<!---->
+<!--                            <td>-->
+<!--                                --><?php //if ($game['status'] == 'ok') { ?>
+<!--                                    <a href="?gameid=--><?//= $game['id'] ?><!--&type=1&game_type=2"-->
+<!--                                       dataid="--><?//= $game['id'] ?><!--"-->
+<!--                                       class="download_visualize_info_btn">-->
+<!--                                        <button type="button" class="mui-btn mui-btn--small mui-btn--primary">-->
+<!--                                            Отладчик-->
+<!--                                        </button>-->
+<!--                                    </a>-->
+<!--                                    <a href="?gameid=--><?//= $game['id'] ?><!--&type=2&game_type=2"-->
+<!--                                       dataid="--><?//= $game['id'] ?><!--"-->
+<!--                                       class="download_visualize_info_btn">-->
+<!--                                        <button type="button" class="mui-btn mui-btn--small mui-btn--primary">-->
+<!--                                            Визуализатор-->
+<!--                                        </button>-->
+<!--                                    </a>-->
+<!--                                --><?php //} ?>
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        --><?php
+//                        $i++;
+//                    }
+//                } ?>
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            </div>-->
+<!--        </div>-->
 
     </div>
 

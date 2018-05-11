@@ -36,11 +36,11 @@ require_once("core/header.php");
                     <i class="fa fa-users"></i>
                     Рейтинг</a>
             </li>
-            <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"
-                                            data-mui-controls="pane-default-2">
-                    <i class="fa fa-trophy"></i>
-                    Финал</a>
-            </li>
+<!--            <li class="tab2" data-id="2"><a class="pointer" data-id="2" data-mui-toggle="tab"-->
+<!--                                            data-mui-controls="pane-default-2">-->
+<!--                    <i class="fa fa-trophy"></i>-->
+<!--                    Финал</a>-->
+<!--            </li>-->
 
         </ul>
 
@@ -90,52 +90,52 @@ require_once("core/header.php");
         </div>
 
 
-        <?php $users = getFinalUsers() ?>
-
-        <div class="mui-tabs__pane mui-panel " id="pane-default-2">
-            <div class="mui-container-fluid ">
-
-                <table class="mui-table mui-table--bordered table_center users_info_table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Имя</th>
-                        <th>Очки</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <?php
-                    $i=1;
-                    if (isset($users) && count($users)>0) {
-                        foreach ($users as $info) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <?= $i ?>
-                                </td>
-                                <td class="source_info">
-
-                                    <?= $info['name'] ?>
-
-                                </td>
-                                <td class="source_info">
-                                    <?= $info['points'] ?>
-                                </td>
-
-                            </tr>
-                            <?php
-                            $i++;
-                        }
-                    }?>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-        </div>
+<!--        --><?php //$users = getFinalUsers() ?>
+<!---->
+<!--        <div class="mui-tabs__pane mui-panel " id="pane-default-2">-->
+<!--            <div class="mui-container-fluid ">-->
+<!---->
+<!--                <table class="mui-table mui-table--bordered table_center users_info_table">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>#</th>-->
+<!--                        <th>Имя</th>-->
+<!--                        <th>Очки</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!---->
+<!--                    <tbody>-->
+<!--                    --><?php
+//                    $i=1;
+//                    if (isset($users) && count($users)>0) {
+//                        foreach ($users as $info) {
+//                            ?>
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    --><?//= $i ?>
+<!--                                </td>-->
+<!--                                <td class="source_info">-->
+<!---->
+<!--                                    --><?//= $info['name'] ?>
+<!---->
+<!--                                </td>-->
+<!--                                <td class="source_info">-->
+<!--                                    --><?//= $info['points'] ?>
+<!--                                </td>-->
+<!---->
+<!--                            </tr>-->
+<!--                            --><?php
+//                            $i++;
+//                        }
+//                    }?>
+<!---->
+<!---->
+<!--                    </tbody>-->
+<!---->
+<!--                </table>-->
+<!---->
+<!--            </div>-->
+<!--        </div>-->
 
 
     </div>
