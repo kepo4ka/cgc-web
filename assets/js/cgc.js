@@ -358,13 +358,23 @@ $(document).ready(function () {
         var modalEl = document.createElement('div');
         modalEl.style.minWidth = '400px';
         modalEl.style.maxWidth = "400px";
+        modalEl.style.overflowX = "auto";
         modalEl.style.Height = '300px';
         modalEl.style.margin = '100px auto';
         modalEl.style.backgroundColor = '#fff';
         modalEl.style.position='relative';
         modalEl.className = "mui-panel";
 
-        $(modalEl)[0].innerText =text;
+        text = ReplaceOperatorsForHtml(text, "&le;", "<=");
+        text = ReplaceOperatorsForHtml(text, "&ge;", ">=");
+        text = ReplaceOperatorsForHtml(text, "&lt;", "<");
+        text = ReplaceOperatorsForHtml(text, "&gt;", ">");
+
+        var pre = document.createElement ('pre');
+        pre.innerText = text;
+
+
+        $(modalEl).html(pre);
 
 
         mui.overlay('on', modalEl);
@@ -377,6 +387,14 @@ $(document).ready(function () {
         } else {
             x.className = "navbar";
         }
+    }
+
+    function ReplaceOperatorsForHtml(text, originstr, newstr)
+    {
+        while (text.search(originstr)>0) {
+            text = text.replace(originstr, newstr);
+        }
+        return text;
     }
 
 
