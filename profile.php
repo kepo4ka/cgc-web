@@ -313,6 +313,7 @@ require_once("core/header.php");
                     </button>
                 </a>
 
+                <div class="mui-container-fluid">
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
                     <tr>
@@ -359,7 +360,7 @@ require_once("core/header.php");
                     } ?>
                     </tbody>
                 </table>
-
+                </div>
             </div>
             <button type="submit" name="game_start" class="game_start_btn mui-btn mui-btn--accent btn-big-width" <?php
             if ($sandboxgame_createblock == true) {
@@ -390,7 +391,7 @@ require_once("core/header.php");
                     <button type="button" class="mui-btn mui-btn--raised update_btn">Обновить
                     </button>
                 </a>
-
+                <div class="mui-container-fluid">
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
                     <tr>
@@ -489,6 +490,7 @@ require_once("core/header.php");
                     } ?>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
@@ -500,6 +502,7 @@ require_once("core/header.php");
                     </button>
                 </a>
 
+                <div class="mui-container-fluid">
                 <table class="mui-table mui-table--bordered table_center users_info_table">
                     <thead>
                     <tr>
@@ -596,6 +599,7 @@ require_once("core/header.php");
                     } ?>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 

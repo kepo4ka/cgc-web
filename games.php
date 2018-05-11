@@ -78,10 +78,11 @@ require_once("core/header.php");
 
 
         <div class="mui-tabs__pane mui-panel mui--is-active" id="pane-default-1">
-            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="right">
+            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="">
                 <button type="button" class="mui-btn mui-btn--raised">Обновить
                 </button>
             </a>
+            <div class="mui-container-fluid">
             <table class="mui-table mui-table--bordered table_center users_info_table">
                 <thead>
                 <tr>
@@ -180,16 +181,17 @@ require_once("core/header.php");
                 } ?>
                 </tbody>
             </table>
+            </div>
 
         </div>
 
 
         <div class="mui-tabs__pane mui-panel" id="pane-default-2">
-            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="right">
+            <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="">
                 <button type="button" class="mui-btn mui-btn--raised">Обновить
                 </button>
             </a>
-
+            <div class="mui-container-fluid">
             <table class="mui-table mui-table--bordered table_center users_info_table">
                 <thead>
                 <tr>
@@ -291,7 +293,7 @@ require_once("core/header.php");
                 } ?>
                 </tbody>
             </table>
-
+            </div>
         </div>
 
     </div>
