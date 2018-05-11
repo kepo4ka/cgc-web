@@ -356,8 +356,8 @@ $(document).ready(function () {
     function activateModalText(text) {
 
         var modalEl = document.createElement('div');
-        modalEl.style.minWidth = '400px';
-        modalEl.style.maxWidth = "400px";
+        modalEl.style.minWidth = '600px';
+        modalEl.style.maxWidth = "600px";
         modalEl.style.overflowX = "auto";
         modalEl.style.Height = '300px';
         modalEl.style.margin = '100px auto';
