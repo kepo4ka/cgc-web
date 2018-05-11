@@ -28,7 +28,7 @@ require_once("core/header.php");
 
         <div class="mui--text-headline"><?=$message?></div>
 
-        <form action="core/auth.php" method="post" class="mui-form auth_form block">
+        <form action="core/auth.php" method="post" class="mui-form auth_form1 block">
 <!--            <legend>Авторизация</legend>-->
             <div class="mui-textfield">
                 <input type="text" required name="login" placeholder="Логин">
